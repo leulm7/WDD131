@@ -28,10 +28,7 @@ header h2 {
 main {
     max-width: 600px;
     margin: 20px auto;
-    background-color: #fff;
-    padding: 20px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
+    
 }
 
 h3 {
@@ -46,19 +43,11 @@ ol {
     padding-left: 0px;
 }
 
-figure {
-    text-align: center;
-    margin: 20px 0;
-}
 
-figure img {
-    max-width: 150px;
-    height: auto;
-}
 
 /* Dark Theme */
 .dark {
-    color: #fff;
+    color: white;
     background-color: #333;
 }
 
