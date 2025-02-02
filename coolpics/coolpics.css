@@ -129,3 +129,33 @@ footer {
         }
     }
 }
+
+.hide {
+	display: none;
+}
+
+/* Show the menu by default on larger screens */
+@media screen and (min-width: 700px) {
+    .menu {
+        display: flex; /* Ensures menu is visible */
+        list-style-type: none;
+        padding: 0;
+    }
+    .menu-button {
+        display: none; /* Hide the menu button on larger screens */
+    }
+}
+
+/* Ensure the menu is hidden by default on small screens */
+@media screen and (max-width: 699px) {
+    .menu {
+        display: none; /* Hidden by default */
+        flex-direction: column;
+        background-color: var(--primary-color);
+        position: absolute;
+        width: 100%;
+        top: 60px;
+        left: 0;
+        padding: 10px 0;
+    }
+}
