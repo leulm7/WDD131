@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Review Blog</title>
+    <link rel="stylesheet" href="h.css">
+    <script defer src="h.js"></script>
+</head>
+<body>
+    <header>
+        <h1>Book Review Blog</h1>
+        <nav>
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="#">Reviews</a></li>
+                <li><a href="#">About</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <aside class="filters">
+            <h2>Filter by Genre</h2>
+            <ul>
+                <li><button data-genre="all">All</button></li>
+                <li><button data-genre="fiction">Fiction</button></li>
+                <li><button data-genre="non-fiction">Non-fiction</button></li>
+                <li><button data-genre="mystery">Mystery</button></li>
+            </ul>
+        </aside>
+        <section class="reviews">
+            <article class="review" data-genre="fiction">
+                <h2>The Great Gatsby</h2>
+                <p>A classic novel by F. Scott Fitzgerald...</p>
+            </article>
+            <article class="review" data-genre="mystery">
+                <h2>Gone Girl</h2>
+                <p>A thrilling mystery novel by Gillian Flynn...</p>
+            </article>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2025 Book Review Blog</p>
+    </footer>
+</body>
+</html>

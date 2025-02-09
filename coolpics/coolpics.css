@@ -32,6 +32,7 @@ h1, h2 {
 }
 h1{
     color: #fff;
+    height: 100px;
 }
 
 a:link, a:visited {
@@ -93,16 +94,24 @@ footer {
     margin-top: auto; /* Ensures footer stays at the bottom */
 }
 
+.menu {
+    flex-direction: column;
+}
+.hide {
+	display: none;
+}
+
 
 /* Responsive Design for Mobile Screens */
 @media screen and (min-width: 700px) {
     .gallery {
         grid-template-columns: 1fr 1fr;
     }
-    header{
-        a {
-            display:none;
-        }
+    .menu {
+        display: grid; /* Ensures menu is visible */
+        grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+        list-style-type: none;
+        padding: 0;
     }
 }
 @media screen and (min-width: 1000px) {
@@ -110,8 +119,9 @@ footer {
         grid-template-columns: 1fr 1fr 1fr;
     }
 
-    nav ul {
+    .menu {
         display: flex;
+        flex-direction: row;
         justify-content: center;
         list-style-type: none;
     }
@@ -123,39 +133,9 @@ footer {
     button {
         display: none;
     }
-    header{
+    /* header{
         a {
             display:inline;
         }
-    }
-}
-
-.hide {
-	display: none;
-}
-
-/* Show the menu by default on larger screens */
-@media screen and (min-width: 700px) {
-    .menu {
-        display: flex; /* Ensures menu is visible */
-        list-style-type: none;
-        padding: 0;
-    }
-    .menu-button {
-        display: none; /* Hide the menu button on larger screens */
-    }
-}
-
-/* Ensure the menu is hidden by default on small screens */
-@media screen and (max-width: 699px) {
-    .menu {
-        display: none; /* Hidden by default */
-        flex-direction: column;
-        background-color: var(--primary-color);
-        position: absolute;
-        width: 100%;
-        top: 60px;
-        left: 0;
-        padding: 10px 0;
-    }
+    } */
 }
