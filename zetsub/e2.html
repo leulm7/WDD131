@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Grading System</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f9f9f9;
+      text-align: center;
+      padding: 20px;
+    }
+    .container {
+      background-color: #ffffff;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0px 0px 10px 0px #ddd;
+      display: inline-block;
+    }
+    input[type="number"] {
+      padding: 10px;
+      margin: 10px;
+      width: 200px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+    }
+    button {
+      padding: 10px 20px;
+      background-color: #28a745;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #218838;
+    }
+    #result {
+      margin-top: 20px;
+      font-size: 18px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Grading System</h1>
+    <label for="marks">Enter your marks:</label><br>
+    <input type="number" id="marks" placeholder="Enter marks (0-100)" min="0" max="100" required>
+    <br>
+    <button onclick="calculateGrade()">Get Grade</button>
+    <div id="result"></div>
+  </div>
+
+  <script>
+    function calculateGrade() {
+      const marks = document.getElementById("marks").value;
+      let grade;
+
+      if (marks === "") {
+        alert("Please enter marks.");
+        return;
+      }
+
+      if (marks < 0 || marks > 100) {
+        grade = "Invalid marks. Please enter a number between 0 and 100.";
+      } else if (marks >= 90) {
+        grade = "A (Excellent)";
+      } else if (marks >= 80) {
+        grade = "B (Very Good)";
+      } else if (marks >= 70) {
+        grade = "C (Good)";
+      } else if (marks >= 60) {
+        grade = "D (Average)";
+      } else if (marks >= 50) {
+        grade = "E (Pass)";
+      } else {
+        grade = "F (Fail)";
+      }
+
+      document.getElementById("result").textContent = Your grade is: ${grade};
+    }
+  </script>
+</body>
+</html>
