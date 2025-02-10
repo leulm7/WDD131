@@ -19,7 +19,6 @@ header {
     background-color: #fff;
     color: #EFC69B;
     padding: 10px 0;
-    border-bottom: 2px solid #EFC69B;
 }
 
 nav ul {
@@ -27,10 +26,12 @@ nav ul {
     justify-content: center;
     padding: 0;
     list-style: none;
+    border: 2px solid #EFC69B;
+    height: 50px;
 }
 
 nav li {
-    margin: 0 15px;
+    margin: 10px 15px;
 }
 
 nav a {
