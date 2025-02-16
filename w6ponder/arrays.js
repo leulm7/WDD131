@@ -1,3 +1,15 @@
+document.addEventListener("DOMContentLoaded", () => {
+  const myList = document.querySelector("#myList");
+  if (myList) {
+    myList.innerHTML = stepsHtml.join("");
+  }
+
+  const gpaElement = document.querySelector("#gpa");
+  if (gpaElement) {
+    const gpa = gpaPoints.reduce((total, item) => total + item, 0) / gpaPoints.length;
+    gpaElement.textContent = `GPA: ${gpa.toFixed(2)}`;
+  }
+});
 //  arrays.js
 const steps = ["one", "two", "three"]; 
 function listTemplate(step) {
