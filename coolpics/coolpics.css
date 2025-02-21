@@ -100,7 +100,30 @@ footer {
 .hide {
 	display: none;
 }
+#viewer{
+    top:0;
+    left:0;
+    bottom:0;
+    right:0;
+    position: fixed;
+    background-color: rgba(0, 0, 0, 0.75);
+    display:grid;
+    grid-template-rows: 1fr 1fr;
+    margin: 30px;
+    }
+#close-viewer{
+    color: red;
+    font-size: 10px;
+    text-align: right;
+    grid-row: 1/2;
+}
 
+#viewer img{
+    max-width: 80%;
+    height: 80%;
+    margin: auto;
+    grid-row: 2/3;
+}
 
 /* Responsive Design for Mobile Screens */
 @media screen and (min-width: 700px) {
