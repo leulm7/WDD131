@@ -1,48 +1,62 @@
-// form-demo.js
 function validateForm(event) {
-    // get a reference to the form. Because we attached a submit event listener to the form itself, we can access the form either through 'event.target', or 'this'
-    const theForm = event.target;
-    // the default behavior for a form submit is to try and navigate to another page where the form would be processed, if a url is not provided it will reload the current page. This sometimes is not desirable behavior. One case when we might do this is if we think there is bad data in the form.
-    // To keep it from happening we can can call e.preventDefault()
-    // You should always give feedback to the user about what whet wrong so they can fix it. We will store the error messages here
-    const errors = [];
-    // start by assuming the form is valid.
-    let isValid = true;
-    // add our validations here
-  
-    // if we ran into any problems above valid will be false.
-    if (!isValid) {
-      //stop the form from being submitted
-      event.preventDefault();
-      // show the errors
-      showErrors(errors);
-      // return false to let the browser know the form was not submitted.
-      return false;
+  const theForm = event.target;
+  const errors = [];
+  let isValid = true;
+
+  // For credit card payment, check if the credit card number is exactly "1234123412341234"
+  if (theForm.payment.value === "credit") {
+    if (theForm.creditcard.value !== "1234123412341234") {
+      isValid = false;
+      errors.push("Invalid Credit Card Number");
     }
   }
-  
-  function togglePaymentDetails(e) {
-    // get a reference to the form. We can access all the named form inputs through the form element.
-    const theForm = ;
-    // we will also need the creditCardContainer and paypalUsernameContainer
-    const creditCardContainer = ;
-    const paypalContainer = ;
-  
-    // Hide payment containers by adding the '.hide' class to each of them
-  
-    // Disable required for payment fields...if we hide a required field the browser will throw an error when we try to submit!
-  
-  
-    // Show the container based on the selected payment method, and add the required attribute back.
-  
+
+  // Validate that the full name is "Bob"
+  if (theForm.fullName.value !== "Bob") {
+    isValid = false;
+    errors.push("Your name is not Bob");
   }
-  
-  // helper function to display our errors.
-  function showErrors(errors) {
-    const errorEl = document.querySelector(".errors");
-    const html = errors.map((error) => `<p>${error}</p>`);
-    errorEl.innerHTML = html.join("");
+
+  if (!isValid) {
+    event.preventDefault();
+    showErrors(errors);
+    return false;
   }
-  // attach a change event handler to the paymentMethod input
-  
-  // attach a submit event handler to the form
+}
+
+function togglePaymentDetails(e) {
+  const theForm = document.querySelector("#checkoutForm");
+
+  // Get the credit card container by selecting the parent of the credit card input.
+  const creditCardContainer = document.getElementById("creditcard").parentElement;
+  // Get the PayPal container by selecting the parent of the PayPal input.
+  const paypalContainer = document.getElementById("paypalUser").parentElement;
+
+  // Hide both payment detail containers initially.
+  creditCardContainer.classList.add("hide");
+  paypalContainer.classList.add("hide");
+
+  // Remove the 'required' attribute from both inputs.
+  theForm.creditcard.required = false;
+  theForm.paypalUser.required = false;
+
+  // Depending on the chosen payment method, display the corresponding container and set the required attribute.
+  if (theForm.payment.value === "credit") {
+    creditCardContainer.classList.remove("hide");
+    theForm.creditcard.required = true;
+  } else if (theForm.payment.value === "paypal") {
+    paypalContainer.classList.remove("hide");
+    theForm.paypalUser.required = true;
+  }
+}
+
+function showErrors(errors) {
+  const errorEl = document.querySelector(".errors");
+  const html = errors.map((error) => `<p>${error}</p>`);
+  errorEl.innerHTML = html.join("");
+}
+
+// Attach the change event to the payment select element using its id "payment".
+document.querySelector("#payment").addEventListener("change", togglePaymentDetails);
+// Attach the submit event to the form.
+document.querySelector("#checkoutForm").addEventListener("submit", validateForm);
