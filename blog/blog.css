@@ -61,7 +61,6 @@ nav a:hover {
 main {
     display: grid;
     grid-template-columns: 80% 20%;
-    max-width: 800px;
     margin: 20px auto;
     padding: 1rem 2rem;
 }
@@ -76,15 +75,13 @@ article {
 }
 
 article section {
-    display: grid;
-    grid-template-columns: 1fr 2fr;
     gap: 20px;
     align-items: center;
 }
 
 .book {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr 1.5fr;
 }
 
 article img {
