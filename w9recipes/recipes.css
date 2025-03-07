@@ -1,0 +1,117 @@
+@import url("https://fonts.googleapis.com/css2?family=family=Amatic+SC&display=swap");
+ :root {
+ --primary-color: #1B98E0;
+ --secondary-color: #59c3c3;
+ --text-dark: #333;
+ --text-light: #ebebeb;
+ --primary-font: Arial, Helvetica,sans-serif;
+ --secondary-font: "Amatic SC";
+ }
+header{
+    display: flex;
+    gap:0.5 rem;
+    align-items: center;
+    justify-content: center;
+}
+
+.site_logo{
+    width: 100px;
+    height: 100px;
+}
+body{
+    font-family: var(--secondary-font);
+    margin: 20px;
+}
+h1{
+    font-size: 3em;
+}
+h2{
+    color: var(--primary-color);
+    font-family: var(--secondary-font);
+}
+
+.search_row{
+    display: flex;
+    img {
+        height: 16px;
+    }
+    input{
+        width: 100%;
+    }
+    border-radius: 2px;
+}
+#search{
+    border: 2px solid #333;
+    border-radius: 2px;
+    height: 30px;
+}
+.recipe{
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #333;
+    border-radius: 15px;
+    padding: 30px;
+
+}
+.recipe-img {
+    height: 50%;
+}
+.social{
+    margin-top: 30px;
+}
+footer{
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    align-items: center;
+    img{
+        height: 50px;
+    }
+    flex-direction: column;
+    flex-wrap: wrap;
+}
+.tag{
+    border: 2px solid #333;
+}
+.no-img{
+    margin: 10px;
+}
+
+@media screen and (min-width:600px){
+
+    .recipe{
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+        height: 20%;
+        align-items: center;
+    }
+    .recipe-img{
+        grid-column: 1/2;
+        height: 100%;
+    }
+    .no-img{
+        grid-column: 2/3;
+    }
+    footer {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+    }
+    .icons {
+        padding-top: 20px;
+    }
+    h2{
+        font-size: 2em;
+    }
+    footer:last-child {
+        order: -1;
+        justify-content: left;
+    }
+    .icons:last-child {
+        order: -1;
+        justify-content: left;
+    }
+}
+/* do some padding and polishing
+also do some media query for bigger screen*/

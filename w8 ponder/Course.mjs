@@ -54,4 +54,6 @@ const aCourse = {
         document.querySelector("#sections").innerHTML = html.join("");
     },
   };
+
+  
 export default aCourse;

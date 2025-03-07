@@ -22,7 +22,7 @@ section{
     background-color: #fff;
 }
 
-@media screen and (min-width:500px) {
+@media screen and (min-width:700px) {
     header{
         background-color: #000;
         color: white;
