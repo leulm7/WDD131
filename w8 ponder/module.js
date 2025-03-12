@@ -1,5 +1,6 @@
-//modules.js
-import aCourse from "./course.js";  
+import aCourse from "./Course.mjs";
+  
+  aCourse.init();
   document.querySelector("#enrollStudent").addEventListener("click", function () {
     const sectionNum = document.querySelector("#sectionNumber").value;
     aCourse.changeEnrollment(sectionNum);
@@ -12,4 +13,4 @@ import aCourse from "./course.js";
 //   setCourseInfo(aCourse);
 //   renderSections(aCourse.sections);
 
-aCourse.init();
+console.log(aCourse);
