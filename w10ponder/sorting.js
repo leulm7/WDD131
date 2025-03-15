@@ -98,5 +98,18 @@ function searchList2(list, query) {
     }
     return list.filter(searchCallback);
 }
-filteredList = searchList2(hikes, "al");
-console.log(filteredList);
+
+hikes.sort((a, b) => a.distance > b.distance);
+
+hikes.sort((a, b) => {
+    const aDistance = parseFloat(a.distance);
+    const bDistance = parseFloat(b.distance);
+    return aDistance - bDistance;
+});
+
+console.log(hikes);
+
+
+
+// filteredList = searchList2(hikes, "al");
+// console.log(filteredList);

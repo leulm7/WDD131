@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Library Management System</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            text-align: center;
+            margin: 50px;
+        }
+
+        .container {
+            background: white;
+            padding: 20px;
+            width: 400px;
+            margin: auto;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        input {
+            width: 90%;
+            padding: 10px;
+            margin: 5px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px 0;
+            width: 95%;
+        }
+
+        .delete-btn {
+            background-color: #ff4444;
+            padding: 5px 10px;
+            margin-left: 10px;
+            width: auto;
+        }
+
+        .edit-btn {
+            background-color: #2196F3;
+            padding: 5px 10px;
+            margin-left: 10px;
+            width: auto;
+        }
+
+        button:hover {
+            opacity: 0.8;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+            text-align: left;
+        }
+
+        li {
+            background: #e4e4e4;
+            padding: 10px;
+            margin-top: 5px;
+            border-radius: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .error {
+            color: red;
+            font-size: 0.8em;
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Library Management</h2>
+        <div id="errorMessage" class="error"></div>
+        <input type="text" id="bookTitle" placeholder="Enter Book Title">
+        <input type="text" id="bookAuthor" placeholder="Enter Author Name">
+        <button onclick="addBook()">Add Book</button>
+
+        <h3>Books List:</h3>
+        <ul id="bookList"></ul>
+    </div>
+
+    <script>
+        // Load books from localStorage on page load
+        let books = JSON.parse(localStorage.getItem('books')) || [];
+        updateBookList();
+
+        function addBook() {
+            let title = document.getElementById("bookTitle").value.trim();
+            let author = document.getElementById("bookAuthor").value.trim();
+            let errorDiv = document.getElementById("errorMessage");
+            
+            // Input validation
+            if (!title || !author) {
+                errorDiv.textContent = "Please fill in both title and author fields";
+                return;
+            }
+
+            // Check for duplicates
+            if (books.some(book => book.title.toLowerCase() === title.toLowerCase() && 
+                                 book.author.toLowerCase() === author.toLowerCase())) {
+                errorDiv.textContent = "This book already exists in the library";
+                return;
+            }
+
+            // Add new book
+            books.push({
+                id: Date.now(),
+                title: title,
+                author: author
+            });
+
+            // Save to localStorage
+            saveToLocalStorage();
+            
+            // Clear inputs and error message
+            document.getElementById("bookTitle").value = "";
+            document.getElementById("bookAuthor").value = "";
+            errorDiv.textContent = "";
+            
+            updateBookList();
+        }
+
+        function deleteBook(id) {
+            books = books.filter(book => book.id !== id);
+            saveToLocalStorage();
+            updateBookList();
+        }
+
+        function editBook(id) {
+            const book = books.find(book => book.id === id);
+            const newTitle = prompt("Enter new title:", book.title);
+            const newAuthor = prompt("Enter new author:", book.author);
+
+            if (newTitle && newAuthor) {
+                book.title = newTitle;
+                book.author = newAuthor;
+                saveToLocalStorage();
+                updateBookList();
+            }
+        }
+
+        function saveToLocalStorage() {
+            localStorage.setItem('books', JSON.stringify(books));
+        }
+
+        function updateBookList() {
+            let list = document.getElementById("bookList");
+            list.innerHTML = "";
+
+            books.forEach(book => {
+                let li = document.createElement("li");
+                li.innerHTML = `
+                    <span>${book.title} by ${book.author}</span>
+                    <div>
+                        <button class="edit-btn" onclick="editBook(${book.id})">Edit</button>
+                        <button class="delete-btn" onclick="deleteBook(${book.id})">Delete</button>
+                    </div>
+                `;
+                list.appendChild(li);
+            });
+        }
+    </script>
+</body>
+</html>
