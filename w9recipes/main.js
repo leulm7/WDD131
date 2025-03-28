@@ -67,5 +67,44 @@ function ratingTemplate(rating) {
 	return html
 }
 
+function renderRecipes(recipeList) {
+	// get the element we will output the recipes into
+	const output = document.querySelector("#container");
+	// use the recipeTemplate function to transform our recipe objects into recipe HTML strings
+	const html = recipeList.map(whatever => {
+		recipeTemplate(whatever);
+	})
+	// Set the HTML strings as the innerHTML of our output element.
+	output.innerHTML = html
+}
+
+function init() {
+  // get a random recipe
+  const recipe = getRandomListEntry(recipes)
+  // render the recipe with renderRecipes.
+  renderRecipes([recipe]);
+}
+
+init();
+
+function searchHandler(event){
+	event.preventDefault()
+	const userInput = document.getElementById("search").value.toLowerCase()
+	const filter = filterRecipes(userInput)
+	renderRecipes(filter);
+}
+
+function filterRecipes(query){
+	const filtered = recipes.filter(recipe => { 
+	return	recipe.name.toLowerCase().includes(query) ||
+			recipe.description.toLowerCase().includes(query) ||
+			recipe.tags.find((item) => item.toLowerCase().includes(query)) ||
+			recipe.recipeIngredient.find((item) => item.toLowerCase().includes(query));
+})
+	const sorted = filtered.sort((a, b) => a.name.localeCompare(b.name));
+		return sorted
+}
+document.querySelector("#search").addEventListener("click", searchHandler)
+
 const recipe = getRandomRecipe(recipes);
 console.log(recipeTemplate(recipe));
