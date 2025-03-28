@@ -2,18 +2,19 @@ import recipes from "./recipes.mjs";
 
 
 function getRandomIndex(maxNum){
+	console.log("index")
     return Math.floor(Math.random()*maxNum);
 
 }
 
 function getRandomRecipe(list){
+	console.log("getRandomRecipe")
     const maxNum = list.length;
     return list[getRandomIndex(maxNum)];
 }
 
-alert (getRandomIndex(recipes.length));
-
 function recipeTemplate(recipe) {
+	console.log("template")
 	return `<figure class="recipe">
 	<img src="${recipe.image}" alt="${recipe.name}" />
 	<figcaption>
@@ -32,6 +33,7 @@ function recipeTemplate(recipe) {
 }
 
 function tagsTemplate(tags) {
+	console.log("tags")
 	// loop through the tags list and transform the strings to HTML
     let html=''
     tags.forEach(tag => {
@@ -41,6 +43,7 @@ function tagsTemplate(tags) {
 }
 
 function ratingTemplate(rating) {
+	console.log("rating")
 	// begin building an html string using the ratings HTML written earlier as a model.
 	let html = `<span
 	class="rating"
@@ -68,19 +71,21 @@ function ratingTemplate(rating) {
 }
 
 function renderRecipes(recipeList) {
+	console.log("renderRecipes")
 	// get the element we will output the recipes into
 	const output = document.querySelector("#container");
 	// use the recipeTemplate function to transform our recipe objects into recipe HTML strings
 	const html = recipeList.map(whatever => {
-		recipeTemplate(whatever);
+		return recipeTemplate(whatever);
 	})
 	// Set the HTML strings as the innerHTML of our output element.
-	output.innerHTML = html
+	output.innerHTML = html.join('');
 }
 
 function init() {
+  console.log("init")
   // get a random recipe
-  const recipe = getRandomListEntry(recipes)
+  const recipe = getRandomRecipe(recipes);
   // render the recipe with renderRecipes.
   renderRecipes([recipe]);
 }
@@ -104,7 +109,4 @@ function filterRecipes(query){
 	const sorted = filtered.sort((a, b) => a.name.localeCompare(b.name));
 		return sorted
 }
-document.querySelector("#search").addEventListener("click", searchHandler)
-
-const recipe = getRandomRecipe(recipes);
-console.log(recipeTemplate(recipe));
+document.querySelector("#button").addEventListener("click", searchHandler)
