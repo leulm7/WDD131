@@ -1,0 +1,150 @@
+@import url('https://fonts.googleapis.com/css2?family=Indie+Flower&family=Playwrite+GB+S:ital,wght@0,100..400;1,100..400&family=Rock+Salt&family=Shadows+Into+Light&family=Unkempt:wght@400;700&display=swap');
+
+h1, h2, h4 {
+    font-family: 'Playwrite GB S', 'Rock Salt', 'Unkempt', 'Arial', 'sans-serif'; /* Headline font with backups */
+}
+body{
+    background-color:#6ae9b8;
+    font-family: 'Indie Flower', 'Shadows Into Light', 'Arial', 'sans-serif'; /* Body font with backups */
+    font-size: 22px;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    display: flex; /* Align logo and nav horizontally */
+    align-items: center; /* Vertically align items */
+    justify-content: space-between; /* Space between logo and nav */
+    padding: 5px 10px; /* Optional: Adjust header padding */
+}
+#logo_link {
+    display: flex; /* Ensures the logo stays as a block */
+    align-items: center; /* Vertically aligns the logo within header */
+}
+.logo{
+    width: 20%;
+}
+/* General styles for Home, Log In, and Gallery links */
+nav .home-link,
+nav .gallery-link{
+    color: #dfe1e1;
+    font-weight: 700;
+    border-radius: 4px;
+    border: 2px solid #c2dfdc;
+    background-color: #0d9488;
+    padding: 8px 16px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+nav .login-link {
+    color: #0d9488;
+    font-weight: 700;
+    border-radius: 4px;
+    border: 2px solid #0d9488;
+    background-color: transparent;
+    padding: 8px 16px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+nav .login-link:hover {
+    background-color: #004d40;
+    color: white;
+}
+nav .home-link:hover,
+nav .gallery-link:hover {
+    background-color: transparent;
+    color: #004d40; /* Darker green for text */
+    border-color: #004d40; /* Darker green for border */
+}
+
+#hero-content {
+    display: flex; /* Aligns items horizontally */
+    align-items: center; /* Vertically centers content */
+    gap: 20px; /* Space between the image and text */
+    margin: 20px; /* Add some spacing around the container */
+}
+#hero-img {
+    width: 50%;
+    max-width: 400px; /* Limit the maximum width */
+    height: auto; /* Maintain aspect ratio */
+    margin-left: 0; /* Align image to the left */
+}
+#hero-text {
+    width: 50%; /* Take the remaining space */
+    font-family: 'Indie Flower', 'Arial', sans-serif;
+    font-size: 18px;
+    line-height: 1.6; /* Improve readability */
+    color: #333; /* Neutral dark color for text */
+}
+@media (max-width: 768px) {
+    #hero-content {
+        flex-direction: column; /* Stack content vertically */
+        text-align: center; /* Center-align text */
+    }
+
+    #hero-img,
+    #hero-text {
+        width: 100%; /* Full width for both elements */
+    }
+}
+
+#hero {
+    
+    flex-direction: column; /* Stacks the content vertically */
+    justify-content: center; /* Centers the content vertically */
+    align-items: center; /* Centers the content horizontally */
+    height: 100vh; /* Makes the hero section span the full viewport height */
+    text-align: center; /* Ensures text is centered inside the hero */
+    position: relative; /* Ensures positioned children stay within this section */
+}
+
+#hero h1 {
+    font-size: 3rem; /* Adjust font size for the title */
+    margin: 0; /* Removes default margin */
+}
+
+#hero h4 {
+    font-size: 1.5rem; /* Adjust font size for the subtitle */
+    margin: 0; /* Removes default margin */
+    margin-top: 10px; /* Optional: Adds a little space below the title */
+}
+
+
+
+#intro-box {
+    display: flex; /* Arrange items horizontally */
+    justify-content: space-between; /* Space between the text and the image */
+    align-items: center; /* Vertically align text and image */
+    gap: 20px; /* Add spacing between text and image */
+    padding: 20px; /* Add inner padding */
+    max-width: 1200px; /* Limit width for the section */
+    margin: 0 auto; /* Center the section */
+}
+
+#intro-text {
+    flex: 1; /* Allow text to take up available space */
+    text-align: left; /* Align text to the left */
+    font-size: 18px; /* Adjust text size */
+    line-height: 1.6; /* Improve readability */
+    color: #333; /* Neutral color for text */
+}
+#laptop {
+    display: block; /* Ensures it behaves like a block element */
+    margin-left: auto; /* Pushes the image to the right */
+    margin-right: 0; /* Optional: Explicitly sets right margin to 0 */
+    max-width: 100%; /* Ensures it scales within the parent container */
+    width: 50%;
+}
+
+@media (max-width: 768px) {
+    #intro-box {
+        flex-direction: column; /* Stack text and image vertically on small screens */
+        text-align: center; /* Center-align text on smaller screens */
+    }
+
+    #intro-laptop {
+        margin-left: 0; /* Remove left margin on smaller screens */
+        max-width: 100%; /* Allow image to take full width */
+    }
+}
+

@@ -1,0 +1,176 @@
+@import url('https://fonts.googleapis.com/css2?family=Indie+Flower&family=Playwrite+GB+S:ital,wght@0,100..400;1,100..400&family=Rock+Salt&family=Shadows+Into+Light&family=Unkempt:wght@400;700&display=swap');
+
+h1, h2, h4 {
+    font-family: 'Playwrite GB S', 'Rock Salt', 'Unkempt', 'Arial', 'sans-serif'; /* Headline font with backups */
+}
+body{
+    background-color:#41736f;
+    font-family: 'Indie Flower', 'Shadows Into Light', 'Arial', 'sans-serif'; /* Body font with backups */
+    font-size: 22px;
+    margin: 0;
+    padding: 0;
+}
+/* The Modal (background) */
+  .modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    padding-top: 60px;
+  }
+  .herolog img {
+    size: 100 x 100
+  }
+  /* Modal Content/Box */
+  .modal-content {
+    background-color: #0d9488;
+    margin: 5px auto; /* 15% from the top and centered */
+    border: 1px solid #888;
+    width: 80%; /* Could be more or less, depending on screen size */
+    border-radius: 1%;
+  }
+  .container{
+    background-color:#b7e6e2
+  }
+  
+  /* The Close Button */
+  .close {
+    /* Position it in the top right corner outside of the modal */
+    position: absolute;
+    right: 25px;
+    top: 0;
+    color: #000;
+    font-size: 70px;
+    font-weight: bold;
+  }
+  
+  /* Close button on hover */
+  .close:hover,
+  .close:focus {
+    color: red;
+    cursor: pointer;
+
+  }
+  
+  /* Add Zoom Animation */
+  .animate {
+    -webkit-animation: animatezoom 0.6s;
+    animation: animatezoom 0.6s
+  }
+  
+  @-webkit-keyframes animatezoom {
+    from {-webkit-transform: scale(0)}
+    to {-webkit-transform: scale(1)}
+  }
+  
+  @keyframes animatezoom {
+    from {transform: scale(0)}
+    to {transform: scale(1)}
+  }
+
+header {
+    display: flex; /* Align logo and nav horizontally */
+    align-items: center; /* Vertically align items */
+    justify-content: space-between; /* Space between logo and nav */
+    padding: 5px 10px; /* Optional: Adjust header padding */
+}
+#logo_link {
+    display: flex; /* Ensures the logo stays as a block */
+    align-items: center; /* Vertically aligns the logo within header */
+}
+.logo{
+    width: 20%;
+}
+/* General styles for Home, Log In, and Gallery links */
+nav .home-link,
+nav .gallery-link{
+    color: #dfe1e1;
+    font-weight: 700;
+    border-radius: 4px;
+    border: 2px solid #c2dfdc;
+    background-color: #0d9488;
+    padding: 8px 16px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+nav .login-link {
+    color: #0d9488;
+    font-weight: 700;
+    border-radius: 4px;
+    border: 2px solid #0d9488;
+    background-color: transparent;
+    padding: 8px 16px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+nav .login-link:hover {
+    background-color: #004d40;
+    color: white;
+}
+nav .home-link:hover,
+nav .gallery-link:hover {
+    background-color: transparent;
+    color: #004d40; /* Darker green for text */
+    border-color: #004d40; /* Darker green for border */
+}
+body {
+  background-color: #41736f;
+  font-family: 'Indie Flower', 'Shadows Into Light', 'Arial', 'sans-serif';
+  font-size: 22px;
+  margin: 0;
+  padding: 0;
+}
+
+#login-container {
+  display: flex;
+  justify-content: space-between; /* Aligns text and image horizontally */
+  padding: 40px;
+}
+
+#login-text {
+  width: 50%;
+  color: white;
+  font-size: 24px;
+}
+
+#login-text h1 {
+  font-size: 32px;
+  font-weight: 700;
+}
+
+#login-text p {
+  font-size: 18px;
+}
+
+#sign-up-text {
+  font-weight: bold;
+}
+
+.sign-in-link {
+  background-color: #0d9488;
+  padding: 10px 20px;
+  border-radius: 4px;
+  text-decoration: none;
+  color: white;
+  font-weight: 700;
+  border: 2px solid #0d9488;
+  transition: all 0.3s ease;
+}
+
+.sign-in-link:hover {
+  background-color: transparent;
+  color: #0d9488;
+  border-color: #0d9488;
+}
+
+#login-image img {
+  width: 50%;
+  height: auto;
+  border-radius: 8px;
+}
