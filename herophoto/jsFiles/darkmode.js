@@ -24,14 +24,12 @@ document.addEventListener('DOMContentLoaded', () => {
             
             const logoImg = document.querySelector('.logo');
             if (logoImg) {
-                // You can create a dark version of your logo and uncomment this
-                // logoImg.src = "images/logo-dark.jpeg";
+                
             }
         } else {
-            themeToggle.innerHTML = '🌙'; // Moon emoji for dark mode
+            themeToggle.innerHTML = '🌙';
             localStorage.setItem('theme', 'light');
             
-            // Restore original logo
             const logoImg = document.querySelector('.logo');
             if (logoImg) {
                 logoImg.src = "images/logo Small.jpeg";

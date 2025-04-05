@@ -1,4 +1,3 @@
-// apiConnection.js
 const url =
   "https://api.unsplash.com/search/photos?query=water%20rafting&per_page=30&page=1";
 
@@ -22,7 +21,7 @@ export async function getImages() {
 }
 
 export function renderImages(imageList, containerId = "images") {
-  const html = imageList.map((img, index) => {
+  const html = imageList.map((img) => {
     const photographer = img.user.name;
     const profileLink = img.user.links.html;
     const imageUrl = img.urls.regular;
