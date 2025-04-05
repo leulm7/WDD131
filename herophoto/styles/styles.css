@@ -15,7 +15,7 @@ header {
     display: flex; /* Align logo and nav horizontally */
     align-items: center; /* Vertically align items */
     justify-content: space-between; /* Space between logo and nav */
-    padding: 5px 10px; /* Optional: Adjust header padding */
+    padding: 5px 2px; /* Optional: Adjust header padding */
 }
 #logo_link {
     display: flex; /* Ensures the logo stays as a block */

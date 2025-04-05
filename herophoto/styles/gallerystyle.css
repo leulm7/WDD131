@@ -1,30 +1,31 @@
 @import url('https://fonts.googleapis.com/css2?family=Indie+Flower&family=Playwrite+GB+S:wght@400;700&display=swap');
 
-body{
-    background-color:#6ae9b8;
-    font-family: 'Indie Flower', 'Shadows Into Light', 'Arial', 'sans-serif'; /* Body font with backups */
+body {
+    background-color: #6ae9b8;
+    font-family: 'Indie Flower', 'Shadows Into Light', 'Arial', 'sans-serif';
     font-size: 22px;
     margin: 0;
     padding: 0;
 }
 
 header {
-    display: flex; /* Align logo and nav horizontally */
-    align-items: center; /* Vertically align items */
-    justify-content: space-between; /* Space between logo and nav */
-    padding: 5px 10px; /* Optional: Adjust header padding */
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 5px 10px;
 }
+
 #logo_link {
-    display: flex; /* Ensures the logo stays as a block */
-    align-items: center; /* Vertically aligns the logo within header */
+    display: flex;
+    align-items: center;
 }
-.logo{
+
+.logo {
     width: 20%;
 }
 
-/* General styles for Home, Log In, and Gallery links */
 nav .home-link,
-nav .gallery-link{
+nav .gallery-link {
     color: #dfe1e1;
     font-weight: 700;
     border-radius: 4px;
@@ -33,7 +34,9 @@ nav .gallery-link{
     padding: 8px 16px;
     text-decoration: none;
     transition: all 0.3s ease;
+    margin: 0 5px;
 }
+
 nav .login-link {
     color: #0d9488;
     font-weight: 700;
@@ -43,19 +46,30 @@ nav .login-link {
     padding: 8px 16px;
     text-decoration: none;
     transition: all 0.3s ease;
+    margin: 0 5px;
 }
+
 nav .login-link:hover {
     background-color: #004d40;
     color: white;
 }
+
 nav .home-link:hover,
 nav .gallery-link:hover {
     background-color: transparent;
-    color: #004d40; /* Darker green for text */
-    border-color: #004d40; /* Darker green for border */
+    color: #004d40;
+    border-color: #004d40;
 }
 
-#gallery {
+h1 {
+    text-align: center;
+    color: #004d40;
+    margin: 20px 0;
+    font-size: 2.5rem;
+}
+
+/* Gallery styles */
+#images {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
@@ -63,40 +77,96 @@ nav .gallery-link:hover {
     padding: 20px;
 }
 
-.gallery-item {
+article {
     position: relative;
     width: 300px;
-    height: 200px;
+    height: 300px;
     overflow: hidden;
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s;
+    border-radius: 10px !important;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2) !important;
+    transition: transform 0.3s !important;
+    border: none !important;
+    padding: 0 !important;
+    margin: 15px !important;
 }
 
-.gallery-item:hover {
+article:hover {
     transform: scale(1.05);
-    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
 }
 
-.gallery-item img {
+article img {
     width: 100%;
     height: 100%;
     object-fit: cover;
     transition: transform 0.3s ease-in-out;
 }
 
-.gallery-item:hover img {
-    transform: scale(1.2);
+article:hover img {
+    transform: scale(1.1);
 }
 
-.caption {
+article h2 {
+    display: none; /* Hide the "Image X" title */
+}
+
+/* Description popup on hover */
+.description {
     position: absolute;
-    bottom: 10px;
-    left: 10px;
+    bottom: -100%;
+    left: 0;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
     color: white;
-    background-color: rgba(0, 0, 0, 0.6);
-    padding: 5px 10px;
-    border-radius: 5px;
-    font-size: 16px;
+    padding: 10px;
+    transition: bottom 0.3s ease-in-out;
     font-family: 'Playwrite GB S', Arial, sans-serif;
+    font-size: 16px;
+}
+
+article:hover .description {
+    bottom: 0;
+}
+
+/* Photographer info - moved to top left */
+.photographer {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background-color: rgba(13, 148, 136, 0.8);
+    color: white;
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 14px;
+    transition: opacity 0.3s;
+    opacity: 0;
+}
+
+article:hover .photographer {
+    opacity: 1;
+}
+
+.photographer a {
+    color: white;
+    text-decoration: none;
+}
+
+/* Likes counter - always visible */
+.likes {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: rgba(255, 255, 255, 0.8);
+    color: #e91e63;
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    /* removed opacity transition to keep it always visible */
+}
+
+.likes::before {
+    content: "♥";
+    margin-right: 5px;
+    font-size: 16px;
 }

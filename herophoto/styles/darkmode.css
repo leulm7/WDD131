@@ -1,0 +1,116 @@
+/* This can be added to each of your CSS files or to a separate darkMode.css file */
+
+/* Dark mode toggle button styling */
+.theme-toggle-btn {
+    background-color: transparent;
+    border: 2px solid #0d9488;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    font-size: 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 10px;
+    transition: all 0.3s ease;
+}
+
+.theme-toggle-btn:hover {
+    transform: scale(1.1);
+}
+
+/* Dark mode colors */
+.dark-mode {
+    background-color: #1a1a1a !important;
+    color: #e0e0e0 !important;
+}
+
+/* Header and navigation in dark mode */
+.dark-mode header {
+    background-color: #222 !important;
+}
+
+.dark-mode nav a {
+    color: #e0e0e0 !important;
+}
+
+.dark-mode .home-link,
+.dark-mode .gallery-link {
+    background-color: #115e59 !important;
+    border-color: #115e59 !important;
+}
+
+.dark-mode .login-link {
+    color: #6ae9b8 !important;
+    border-color: #6ae9b8 !important;
+}
+
+.dark-mode .login-link:hover {
+    background-color: #6ae9b8 !important;
+    color: #1a1a1a !important;
+}
+
+.dark-mode .home-link:hover,
+.dark-mode .gallery-link:hover {
+    color: #6ae9b8 !important;
+    border-color: #6ae9b8 !important;
+}
+
+/* Main content in dark mode */
+.dark-mode main {
+    background-color: #1a1a1a !important;
+}
+
+.dark-mode h1, 
+.dark-mode h2 {
+    color: #6ae9b8 !important;
+}
+
+/* Gallery specific dark mode styles */
+.dark-mode article {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5) !important;
+}
+
+.dark-mode .likes {
+    background-color: rgba(50, 50, 50, 0.8) !important;
+}
+
+.dark-mode .photographer {
+    background-color: rgba(10, 66, 60, 0.8) !important;
+}
+
+/* Login specific dark mode styles */
+.dark-mode #login-container {
+    background-color: #222 !important;
+}
+
+.dark-mode .modal-content {
+    background-color: #333 !important;
+}
+
+.dark-mode input[type="text"],
+.dark-mode input[type="password"],
+.dark-mode select,
+.dark-mode textarea {
+    background-color: #444 !important;
+    color: #e0e0e0 !important;
+    border: 1px solid #555 !important;
+}
+
+.dark-mode button {
+    background-color: #115e59 !important;
+}
+
+.dark-mode .cancelbtn {
+    background-color: #7e2d2d !important;
+}
+
+/* Contact form specific dark mode styles */
+.dark-mode .container {
+    background-color: #333 !important;
+}
+
+.dark-mode #open-form {
+    background-color: #115e59 !important;
+}
