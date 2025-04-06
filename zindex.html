@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Audit & Inspection Tracker</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f4f6f8;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background-color: #2c3e50;
+      color: white;
+      padding: 20px;
+      text-align: center;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    main {
+      max-width: 900px;
+      margin: 30px auto;
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+    h1 {
+      color: #85a0de;
+    }
+    h2{
+        color: #0a40bd;
+    }
+    form {
+      margin-bottom: 20px;
+    }
+    form label {
+      display: block;
+      margin-top: 12px;
+      font-weight: 600;
+    }
+    form input, form textarea, form select {
+      width: 100%;
+      padding: 10px;
+      margin-top: 6px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      font-size: 14px;
+    }
+    .btn {
+      margin-top: 15px;
+      padding: 10px 20px;
+      background-color: #2980b9;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    .btn:hover {
+      background-color: #1c6ca6;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 30px;
+    }
+    table, th, td {
+      border: 1px solid #ddd;
+    }
+    th, td {
+      padding: 12px;
+      text-align: left;
+    }
+    th {
+      background-color: #ecf0f1;
+    }
+    .info {
+      font-size: 14px;
+      color: #7f8c8d;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Audit & Inspection Dashboard</h1>
+    <p class="info">Track section goals, decisions, meetings, and performance</p>
+  </header>
+  <main>
+    <h2>Submit a Meeting Report</h2>
+    <form id="reportForm">
+      <label for="section">Section Name:</label>
+      <input type="text" id="section" name="section" placeholder="e.g., Education, Outreach" required>
+
+      <label for="meetingDate">Meeting Date & Time:</label>
+      <input type="datetime-local" id="meetingDate" name="meetingDate" required>
+
+      <label for="attendees">Attendees (comma separated):</label>
+      <input type="text" id="attendees" name="attendees" placeholder="e.g., John, Mary, Alex" required>
+
+      <label for="agenda">Agenda Topics:</label>
+      <textarea id="agenda" name="agenda" rows="3" placeholder="Enter the meeting agenda"></textarea>
+
+      <label for="decisions">Key Decisions Made:</label>
+      <textarea id="decisions" name="decisions" rows="3" placeholder="Enter any key decisions"></textarea>
+
+      <label for="nextSteps">Next Steps/Action Items:</label>
+      <textarea id="nextSteps" name="nextSteps" rows="3" placeholder="Enter next steps or action items"></textarea>
+
+      <button type="submit" class="btn">Submit Report</button>
+    </form>
+
+    <h2>Meeting Reports Dashboard</h2>
+    <table id="reportsTable">
+      <thead>
+        <tr>
+          <th>Section</th>
+          <th>Date & Time</th>
+          <th>Attendees</th>
+          <th>Agenda</th>
+          <th>Decisions</th>
+          <th>Next Steps</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </main>
+  <script>
+    function getReports() {
+      const reports = localStorage.getItem('meetingReports');
+      return reports ? JSON.parse(reports) : [];
+    }
+
+    function saveReports(reports) {
+      localStorage.setItem('meetingReports', JSON.stringify(reports));
+    }
+
+    function addReportToTable(report) {
+      const tbody = document.getElementById('reportsTable').querySelector('tbody');
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td>${report.section}</td>
+        <td>${report.meetingDate}</td>
+        <td>${report.attendees}</td>
+        <td>${report.agenda}</td>
+        <td>${report.decisions}</td>
+        <td>${report.nextSteps}</td>
+      `;
+      tbody.appendChild(tr);
+    }
+
+    window.onload = function() {
+      const reports = getReports();
+      reports.forEach(report => addReportToTable(report));
+    };
+
+    document.getElementById('reportForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const newReport = {
+        section: document.getElementById('section').value,
+        meetingDate: document.getElementById('meetingDate').value,
+        attendees: document.getElementById('attendees').value,
+        agenda: document.getElementById('agenda').value,
+        decisions: document.getElementById('decisions').value,
+        nextSteps: document.getElementById('nextSteps').value
+      };
+      const reports = getReports();
+      reports.push(newReport);
+      saveReports(reports);
+      addReportToTable(newReport);
+      this.reset();
+    });
+  </script>
+</body>
+</html>
