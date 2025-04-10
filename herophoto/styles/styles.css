@@ -21,9 +21,27 @@ header {
     display: flex; /* Ensures the logo stays as a block */
     align-items: center; /* Vertically aligns the logo within header */
 }
-.logo{
-    width: 20%;
+.logo {
+    width: 80px; /* Fixed width instead of percentage for consistency */
+    height: auto;
+    margin-right: 20px;
 }
+
+nav {
+    display: flex;
+    align-items: center;
+    gap: 20px; /* Even spacing between all nav elements */
+}
+
+/* General styling for all navigation links */
+nav a {
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    padding: 10px 16px;
+    border-radius: 4px;
+}
+
 /* General styles for Home, Log In, and Gallery links */
 nav .home-link,
 nav .gallery-link{

@@ -73,18 +73,36 @@ body{
     to {transform: scale(1)}
   }
 
-header {
-    display: flex; /* Align logo and nav horizontally */
-    align-items: center; /* Vertically align items */
-    justify-content: space-between; /* Space between logo and nav */
-    padding: 5px 10px; /* Optional: Adjust header padding */
+  header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px 30px; /* Increased padding for better spacing */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
 }
 #logo_link {
     display: flex; /* Ensures the logo stays as a block */
     align-items: center; /* Vertically aligns the logo within header */
 }
-.logo{
-    width: 20%;
+.logo {
+    width: 80px; /* Fixed width instead of percentage for consistency */
+    height: auto;
+    margin-right: 20px;
+}
+
+nav {
+    display: flex;
+    align-items: center;
+    gap: 20px; /* Even spacing between all nav elements */
+}
+
+/* General styling for all navigation links */
+nav a {
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    padding: 10px 16px;
+    border-radius: 4px;
 }
 /* General styles for Home, Log In, and Gallery links */
 nav .home-link,
