@@ -20,6 +20,17 @@
     transform: scale(1.1);
 }
 
+nav {
+    display: flex;
+    align-items: center;
+    /* other styling */
+  }
+  
+.theme-toggle {
+    margin-right: 10px; /* Add some space between toggle and Home link */
+    /* other styling for your toggle */
+  }
+
 /* Dark mode colors */
 .dark-mode {
     background-color: #1a1a1a !important;

@@ -6,7 +6,10 @@ document.addEventListener('DOMContentLoaded', () => {
     themeToggle.className = 'theme-toggle-btn';
     
     const nav = document.querySelector('nav');
-    nav.appendChild(themeToggle);
+    const firstNavItem = nav.querySelector('a'); // Get the first link in the nav (Home)
+
+// Insert the theme toggle before the first link
+    nav.insertBefore(themeToggle, firstNavItem);
     
     const currentTheme = localStorage.getItem('theme') || 'light';
     
