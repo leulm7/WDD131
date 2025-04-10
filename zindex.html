@@ -88,11 +88,11 @@
   </header>
   <main>
     <h2>Submit a Meeting Report</h2>
-    <form id="reportForm">
-      <label for="section">Section Name:</label>
+    <form action="https://script.google.com/macros/s/AKfycbzMJ6k2oMlbMH1QUloKAH1a5Wgx8nqXcOZtDb8UHM2ZhWoF0Q3qUY8IvfpokwBDpfVQHA/exec" method="POST">
+      <label for="section">Team/Section Name:</label>
       <input type="text" id="section" name="section" placeholder="e.g., Education, Outreach" required>
 
-      <label for="meetingDate">Meeting Date & Time:</label>
+      <label for="meetingDate">Meeting Date:</label>
       <input type="datetime-local" id="meetingDate" name="meetingDate" required>
 
       <label for="attendees">Attendees (comma separated):</label>
@@ -108,6 +108,7 @@
       <textarea id="nextSteps" name="nextSteps" rows="3" placeholder="Enter next steps or action items"></textarea>
 
       <button type="submit" class="btn">Submit Report</button>
+      <button type="button" class="btn" style="background-color:#c0392b; margin-left:10px;" onclick="clearReports()">Clear All Reports</button>
     </form>
 
     <h2>Meeting Reports Dashboard</h2>
@@ -148,28 +149,12 @@
       `;
       tbody.appendChild(tr);
     }
-
-    window.onload = function() {
-      const reports = getReports();
-      reports.forEach(report => addReportToTable(report));
-    };
-
-    document.getElementById('reportForm').addEventListener('submit', function(e) {
-      e.preventDefault();
-      const newReport = {
-        section: document.getElementById('section').value,
-        meetingDate: document.getElementById('meetingDate').value,
-        attendees: document.getElementById('attendees').value,
-        agenda: document.getElementById('agenda').value,
-        decisions: document.getElementById('decisions').value,
-        nextSteps: document.getElementById('nextSteps').value
-      };
-      const reports = getReports();
-      reports.push(newReport);
-      saveReports(reports);
-      addReportToTable(newReport);
-      this.reset();
-    });
+    function clearReports() {
+      if (confirm("Are you sure you want to clear all reports?")) {
+        localStorage.removeItem('meetingReports');
+        document.querySelector('#reportsTable tbody').innerHTML = '';
+      }
+    }
   </script>
 </body>
 </html>
