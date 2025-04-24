@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Where We Stand</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to bottom, #fff0f0, #ffe6e6);
+      color: #333;
+      text-align: center;
+      line-height: 1.6;
+      min-height: 100vh;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    .container {
+      max-width: 700px;
+      margin: 0 auto;
+      padding: 1rem;
+      position: relative;
+      z-index: 10;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      color: #d43f3f;
+      margin-bottom: 1rem;
+    }
+
+    .message-box {
+      background: white;
+      padding: 1.5rem;
+      border-radius: 15px;
+      box-shadow: 0 4px 15px rgba(200,0,0,0.1);
+      margin: 1.5rem 0;
+      transition: all 0.3s ease;
+      border-left: 4px solid #ff5252;
+    }
+
+    .message-box:hover {
+      transform: scale(1.01);
+    }
+
+    .highlight {
+      color: #d43f3f;
+      font-weight: bold;
+    }
+
+    .buttons {
+      margin-top: 1.5rem;
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    button {
+      margin: 0.25rem;
+      padding: 0.75rem 1.5rem;
+      font-size: 1rem;
+      border: none;
+      border-radius: 30px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+
+    .btn-primary {
+      background-color: #ff5252;
+      color: white;
+    }
+
+    .btn-more {
+      background-color: #ff7b7b;
+      color: white;
+    }
+
+    .btn-friend {
+      background-color: #f0f0f0;
+      color: #333;
+    }
+
+    .btn-primary:hover, .btn-more:hover {
+      background-color: #d43f3f;
+      transform: translateY(-2px);
+    }
+
+    .btn-friend:hover {
+      background-color: #e0e0e0;
+      transform: translateY(-2px);
+    }
+
+    .step {
+      opacity: 0;
+      max-height: 0;
+      overflow: hidden;
+      transition: all 0.4s ease;
+    }
+
+    .step.active {
+      opacity: 1;
+      max-height: 1000px;
+      margin-top: 1rem;
+    }
+    
+    .final-message {
+      font-size: 1.2rem;
+      font-weight: bold;
+    }
+    
+    .heart-icon {
+      font-size: 1.5rem;
+      color: #ff3b3b;
+      animation: pulse 1.5s infinite;
+    }
+    
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.2); }
+      100% { transform: scale(1); }
+    }
+
+    /* Flower Animation Styles */
+    .flowers-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+      overflow: hidden;
+    }
+
+    .flower {
+      position: absolute;
+      opacity: 0;
+      animation: float 12s linear infinite, fadeInOut 12s ease-in-out infinite;
+    }
+
+    .flower svg {
+      width: 30px;
+      height: 30px;
+    }
+
+    @keyframes float {
+      0% {
+        transform: translateY(100vh) translateX(0) rotate(0deg);
+      }
+      100% {
+        transform: translateY(-100px) translateX(100px) rotate(360deg);
+      }
+    }
+
+    @keyframes fadeInOut {
+      0%, 100% { opacity: 0; }
+      10%, 90% { opacity: 0.7; }
+    }
+    
+    /* Progress indicator */
+    .progress-bar {
+      display: flex;
+      justify-content: center;
+      margin: 1rem 0;
+    }
+    
+    .progress-dot {
+      width: 10px;
+      height: 10px;
+      background-color: #ffcaca;
+      border-radius: 50%;
+      margin: 0 5px;
+      transition: all 0.3s ease;
+    }
+    
+    .progress-dot.active {
+      background-color: #ff5252;
+      transform: scale(1.3);
+    }
+    
+    /* Notification styles */
+    #notification {
+      position: fixed;
+      bottom: -100px;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: rgba(255, 82, 82, 0.9);
+      color: white;
+      padding: 12px 25px;
+      border-radius: 30px;
+      z-index: 100;
+      transition: all 0.5s ease;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    }
+    
+    #notification.show {
+      bottom: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="flowers-container" id="flowers-container"></div>
+  
+  <!-- Notification element -->
+  <div id="notification">Message sent!</div>
+  
+  <div class="container">
+    <h1>Where We Stand</h1>
+    
+    <div class="progress-bar" id="progress-bar">
+      <div class="progress-dot active" id="dot-0"></div>
+      <div class="progress-dot" id="dot-1"></div>
+      <div class="progress-dot" id="dot-2"></div>
+      <div class="progress-dot" id="dot-3"></div>
+      <div class="progress-dot" id="dot-4"></div>
+    </div>
+    
+    <div class="message-box" id="intro">
+      <p>Hey hani hope all is well. I've had time to reflect and been wanting to understand where we stand...</p>
+      <div class="buttons">
+        <button class="btn-primary" onclick="revealNext('step1', 1)">Read more</button>
+      </div>
+    </div>
+    
+    <div class="step" id="step1">
+      <div class="message-box">
+        <p>...the way we talk and conversate with each other is something that brings me hella joy and I like it but it's hard to understand to know where we stand.</p>
+        <div class="buttons">
+          <button class="btn-primary" onclick="revealNext('step2', 2)">Continue</button>
+        </div>
+      </div>
+    </div>
+    
+    <div class="step" id="step2">
+      <div class="message-box">
+        <p>I js wanna know what you see out of this, us. I'm asking because im a person that really appreciates when things are communicated and I'm not saying this to scare you off but the way we talk gives me hope...</p>
+        <div class="buttons">
+          <button class="btn-primary" onclick="revealNext('step3', 3)">Keep reading</button>
+        </div>
+      </div>
+    </div>
+    
+    <div class="step" id="step3">
+      <div class="message-box">
+        <p>...and I don't want to hold on to a empty hope so I'd really appreciate it if you tell me where we stand. Meaning I care about the connection we've built and it would mean a lot to know if you see this as something meaningful or more on the friendship side.</p>
+        <div class="buttons">
+          <button class="btn-primary" onclick="revealNext('choice', 4)">Continue</button>
+        </div>
+      </div>
+    </div>
+    
+    <div class="step" id="choice">
+      <div class="message-box">
+        <p>Whatever it is, I just love for us both to be on the same page.</p>
+        <p class="highlight">How do you see us?</p>
+        <div class="buttons">
+          <button class="btn-more" onclick="showResponse('more')">Something more</button>
+          <button class="btn-friend" onclick="showResponse('friend')">Just friends</button>
+        </div>
+      </div>
+    </div>
+    
+    <div class="step" id="more-response">
+      <div class="message-box">
+        <p class="final-message">That makes me so happy <span class="heart-icon">❤️</span></p>
+        <p>Let's talk more about this. Can we meet up soon?</p>
+      </div>
+    </div>
+    
+    <div class="step" id="friend-response">
+      <div class="message-box">
+        <p>I appreciate your honesty. Friendship is valuable too, and I'm glad we could talk about this openly.</p>
+        <p>Thanks for being straight with me.</p>
+      </div>
+    </div>
+    
+  </div>
+
+  <script>
+    // Create flower SVGs of different colors
+    const flowerColors = [
+      '#ff9999', // Light Red
+      '#ff6666', // Medium Red
+      '#ff3333', // Bright Red
+      '#ffcccc', // Very Light Red
+      '#ff8080', // Pink Red
+      '#d43f3f'  // Dark Red
+    ];
+    
+    const flowerSVGs = [
+      // Simple flower 1
+      (color) => `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+        <path fill="${color}" d="M50 20 C60 0, 80 10, 80 30 C100 40, 90 60, 70 60 C60 80, 40 80, 30 60 C10 60, 0 40, 20 30 C20 10, 40 0, 50 20 Z"/>
+        <circle fill="#ffec99" cx="50" cy="45" r="10"/>
+      </svg>`,
+      
+      // Heart
+      (color) => `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+        <path fill="${color}" d="M50,30 C35,10 10,20 10,40 C10,60 30,70 50,90 C70,70 90,60 90,40 C90,20 65,10 50,30 Z"/>
+      </svg>`,
+      
+      // Simple flower 3
+      (color) => `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+        <path fill="${color}" d="M50 15 Q65 15, 65 30 Q80 30, 80 45 Q80 60, 65 60 Q65 75, 50 75 Q35 75, 35 60 Q20 60, 20 45 Q20 30, 35 30 Q35 15, 50 15 Z"/>
+        <circle fill="#ffec99" cx="50" cy="45" r="10"/>
+      </svg>`
+    ];
+    
+    // Setup tracking
+    let interactionLog = [];
+    let lastInteraction = null;
+    const uniqueId = generateUniqueId();
+    
+    // Generate a unique ID for this page view
+    function generateUniqueId() {
+      return 'msg_' + Math.random().toString(36).substr(2, 9);
+    }
+    
+    // Function to track interactions
+    function trackInteraction(action, step) {
+      const timestamp = new Date().toISOString();
+      const interaction = {
+        id: uniqueId,
+        action: action,
+        step: step,
+        timestamp: timestamp
+      };
+      
+      interactionLog.push(interaction);
+      lastInteraction = interaction;
+      
+      // Send tracking data to specified endpoint if available
+      try {
+        // Check if the URL has a tracking parameter
+        const urlParams = new URLSearchParams(window.location.search);
+        const trackingParam = urlParams.get('track');
+        
+        if (trackingParam) {
+          // Decode the tracking parameter (it could be an email or other identifier)
+          const trackingEndpoint = decodeURIComponent(trackingParam);
+          
+          // Send data via fetch - this could be to an email service, webhook, etc.
+          fetch(trackingEndpoint, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(interaction),
+          })
+          .then(response => {
+            console.log('Tracking sent successfully');
+          })
+          .catch(error => {
+            // Fallback to localStorage if endpoint fails
+            saveToLocalStorage();
+          });
+        } else {
+          // No tracking parameter, use localStorage
+          saveToLocalStorage();
+        }
+      } catch (e) {
+        // Fallback to localStorage
+        saveToLocalStorage();
+      }
+    }
+    
+    // Save interaction data to localStorage as fallback
+    function saveToLocalStorage() {
+      try {
+        localStorage.setItem('messageInteractions', JSON.stringify(interactionLog));
+        localStorage.setItem('lastMessageInteraction', JSON.stringify(lastInteraction));
+      } catch (e) {
+        console.log('Could not save to localStorage');
+      }
+    }
+    
+    // Show notification with message
+    function showNotification(message) {
+      const notification = document.getElementById('notification');
+      notification.textContent = message;
+      notification.classList.add('show');
+      
+      setTimeout(() => {
+        notification.classList.remove('show');
+      }, 3000);
+    }
+    
+    // Initialize flowers when the page loads
+    window.onload = function() {
+      createFlowers();
+      setInterval(addFlower, 3000); // Add a new flower every 3 seconds
+      
+      // Track page load
+      trackInteraction('page_view', 'intro');
+      
+      // Check if we need to restore state (if the page was refreshed)
+      try {
+        const savedInteractions = localStorage.getItem('messageInteractions');
+        if (savedInteractions) {
+          const interactions = JSON.parse(savedInteractions);
+          
+          // Find the furthest step they've reached
+          let furthestStep = 'intro';
+          let finalChoice = null;
+          
+          interactions.forEach(interaction => {
+            if (interaction.action === 'reveal' && 
+                ['step1', 'step2', 'step3', 'choice'].includes(interaction.step)) {
+              furthestStep = interaction.step;
+            }
+            if (interaction.action === 'choice') {
+              finalChoice = interaction.step;
+            }
+          });
+          
+          // Restore to that state
+          if (furthestStep === 'step1') {
+            revealNext('step1', 1, false);
+          }
+          if (furthestStep === 'step2') {
+            revealNext('step1', 1, false);
+            revealNext('step2', 2, false);
+          }
+          if (furthestStep === 'step3') {
+            revealNext('step1', 1, false);
+            revealNext('step2', 2, false);
+            revealNext('step3', 3, false);
+          }
+          if (furthestStep === 'choice') {
+            revealNext('step1', 1, false);
+            revealNext('step2', 2, false);
+            revealNext('step3', 3, false);
+            revealNext('choice', 4, false);
+          }
+          
+          // If they made a final choice, show that too
+          if (finalChoice) {
+            showResponse(finalChoice, false);
+          }
+        }
+      } catch (e) {
+        console.log('Could not restore state');
+      }
+    };
+    
+    function createFlowers() {
+      // Add initial flowers
+      for (let i = 0; i < 6; i++) {
+        setTimeout(() => {
+          addFlower();
+        }, i * 500);
+      }
+    }
+    
+    function addFlower() {
+      const flowersContainer = document.getElementById('flowers-container');
+      const flower = document.createElement('div');
+      flower.className = 'flower';
+      
+      // Random position, size, and rotation
+      const left = Math.random() * 100; // Random horizontal position (%)
+      const size = 20 + Math.random() * 30; // Random size between 20px and 50px
+      const delay = Math.random() * 5; // Random delay
+      const duration = 8 + Math.random() * 8; // Random duration between 8s and 16s
+      
+      // Random flower type and color
+      const flowerIndex = Math.floor(Math.random() * flowerSVGs.length);
+      const colorIndex = Math.floor(Math.random() * flowerColors.length);
+      flower.innerHTML = flowerSVGs[flowerIndex](flowerColors[colorIndex]);
+      
+      // Apply styles
+      flower.style.left = `${left}%`;
+      flower.style.bottom = `-${size}px`;
+      flower.style.width = `${size}px`;
+      flower.style.height = `${size}px`;
+      flower.style.animationDelay = `${delay}s`;
+      flower.style.animationDuration = `${duration}s`;
+      
+      flowersContainer.appendChild(flower);
+      
+      // Remove flower after animation completes
+      setTimeout(() => {
+        flower.remove();
+      }, duration * 1000);
+    }
+    
+    function revealNext(stepId, dotIndex, track = true) {
+      document.getElementById(stepId).classList.add('active');
+      
+      // Update progress dots
+      document.querySelectorAll('.progress-dot').forEach((dot, i) => {
+        if (i <= dotIndex) {
+          dot.classList.add('active');
+        }
+      });
+      
+      // Add more flowers on each step reveal
+      for (let i = 0; i < 4; i++) {
+        setTimeout(() => {
+          addFlower();
+        }, i * 200);
+      }
+      
+      // Track this interaction if tracking is enabled
+      if (track) {
+        trackInteraction('reveal', stepId);
+        showNotification(`Step ${dotIndex} viewed`);
+      }
+      
+      // Smooth scroll to the newly revealed section
+      setTimeout(() => {
+        document.getElementById(stepId).scrollIntoView({behavior: 'smooth'});
+      }, 100);
+    }
+    
+    function showResponse(type, track = true) {
+      if (type === 'more') {
+        document.getElementById('more-response').classList.add('active');
+        document.getElementById('friend-response').classList.remove('active');
+        // Burst of flowers for the love response
+        for (let i = 0; i < 12; i++) {
+          setTimeout(() => {
+            addFlower();
+          }, i * 150);
+        }
+        if (track) {
+          trackInteraction('choice', 'more');
+          showNotification('She chose "Something more" ❤️');
+        }
+      } else {
+        document.getElementById('friend-response').classList.add('active');
+        document.getElementById('more-response').classList.remove('active');
+        // Fewer flowers for the friend response
+        for (let i = 0; i < 3; i++) {
+          setTimeout(() => {
+            addFlower();
+          }, i * 300);
+        }
+        if (track) {
+          trackInteraction('choice', 'friend');
+          showNotification('She chose "Just friends"');
+        }
+      }
+      
+      // Smooth scroll to the response
+      setTimeout(() => {
+        document.getElementById(type + '-response').scrollIntoView({behavior: 'smooth'});
+      }, 100);
+    }
+  </script>
+</body>
+</html>
