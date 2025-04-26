@@ -79,6 +79,22 @@
       font-size: 14px;
       color: #7f8c8d;
     }
+    .status-message {
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 4px;
+      display: none;
+    }
+    .success {
+      background-color: #d4edda;
+      color: #155724;
+      border: 1px solid #c3e6cb;
+    }
+    .error {
+      background-color: #f8d7da;
+      color: #721c24;
+      border: 1px solid #f5c6cb;
+    }
   </style>
 </head>
 <body>
@@ -87,8 +103,10 @@
     <p class="info">Track section goals, decisions, meetings, and performance</p>
   </header>
   <main>
+    <div id="statusMessage" class="status-message"></div>
+    
     <h2>Submit a Meeting Report</h2>
-    <form action="https://script.google.com/macros/s/AKfycbzMJ6k2oMlbMH1QUloKAH1a5Wgx8nqXcOZtDb8UHM2ZhWoF0Q3qUY8IvfpokwBDpfVQHA/exec" method="POST">
+    <form id="reportForm" action="https://script.google.com/macros/s/AKfycbwcWR7owXOLNDUZGEhP_6zUHDdoJpaDJNuMzF3dt6_fgLvrrj5ZtWHOLWcvfGQgLU_f/exec" method="POST">
       <label for="section">Team/Section Name:</label>
       <input type="text" id="section" name="section" placeholder="e.g., Education, Outreach" required>
 
@@ -108,7 +126,7 @@
       <textarea id="nextSteps" name="nextSteps" rows="3" placeholder="Enter next steps or action items"></textarea>
 
       <button type="submit" class="btn">Submit Report</button>
-      <button type="button" class="btn" style="background-color:#c0392b; margin-left:10px;" onclick="clearReports()">Clear All Reports</button>
+      <button type="button" class="btn" style="background-color:#c0392b; margin-left:10px;" onclick="clearReports()">Clear Local Reports</button>
     </form>
 
     <h2>Meeting Reports Dashboard</h2>
@@ -127,15 +145,18 @@
     </table>
   </main>
   <script>
+    // Get stored reports from local storage
     function getReports() {
       const reports = localStorage.getItem('meetingReports');
       return reports ? JSON.parse(reports) : [];
     }
 
+    // Save reports to local storage
     function saveReports(reports) {
       localStorage.setItem('meetingReports', JSON.stringify(reports));
     }
 
+    // Add a report to the table
     function addReportToTable(report) {
       const tbody = document.getElementById('reportsTable').querySelector('tbody');
       const tr = document.createElement('tr');
@@ -149,12 +170,73 @@
       `;
       tbody.appendChild(tr);
     }
+
+    // Clear reports from local storage
     function clearReports() {
-      if (confirm("Are you sure you want to clear all reports?")) {
+      if (confirm("Are you sure you want to clear all local reports?")) {
         localStorage.removeItem('meetingReports');
         document.querySelector('#reportsTable tbody').innerHTML = '';
       }
     }
+
+    // Display status message
+    function showStatus(message, isSuccess) {
+      const statusElement = document.getElementById('statusMessage');
+      statusElement.textContent = message;
+      statusElement.classList.remove('success', 'error');
+      statusElement.classList.add(isSuccess ? 'success' : 'error');
+      statusElement.style.display = 'block';
+      
+      setTimeout(() => {
+        statusElement.style.display = 'none';
+      }, 5000);
+    }
+
+    // Handle form submission
+    document.getElementById('reportForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      const formData = new FormData(this);
+      const report = {
+        section: formData.get('section'),
+        meetingDate: formData.get('meetingDate'),
+        attendees: formData.get('attendees'),
+        agenda: formData.get('agenda'),
+        decisions: formData.get('decisions'),
+        nextSteps: formData.get('nextSteps')
+      };
+      
+      // Save locally
+      const reports = getReports();
+      reports.push(report);
+      saveReports(reports);
+      addReportToTable(report);
+      
+      // Submit to Google Apps Script
+      fetch(this.action, {
+        method: 'POST',
+        body: formData
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.result === 'success') {
+          showStatus('Report successfully saved to Google Drive!', true);
+          this.reset();
+        } else {
+          showStatus('Error saving to Google Drive: ' + data.error, false);
+        }
+      })
+      .catch(error => {
+        showStatus('Failed to save to Google Drive: ' + error.message, false);
+        console.error('Error:', error);
+      });
+    });
+    
+    // Load existing reports when the page loads
+    window.onload = function() {
+      const reports = getReports();
+      reports.forEach(report => addReportToTable(report));
+    };
   </script>
 </body>
 </html>
