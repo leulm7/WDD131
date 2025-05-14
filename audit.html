@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Meeting Report Form</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f4f6f8;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background-color: #2c3e50;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+    main {
+      max-width: 800px;
+      margin: 30px auto;
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+    h1 {
+      color: #85a0de;
+    }
+    form label {
+      display: block;
+      margin-top: 12px;
+      font-weight: 600;
+    }
+    form input, form textarea {
+      width: 100%;
+      padding: 10px;
+      margin-top: 6px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+    }
+    .btn {
+      margin-top: 20px;
+      padding: 10px 20px;
+      background-color: #2980b9;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    #status {
+      margin-top: 20px;
+      padding: 15px;
+      border-radius: 5px;
+      display: none;
+    }
+    .success {
+      background-color: #d4edda;
+      color: #155724;
+    }
+    .error {
+      background-color: #f8d7da;
+      color: #721c24;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Meeting Report Form</h1>
+  </header>
+  
+  <main>
+    <div id="status"></div>
+    
+    <form id="reportForm">
+      <label for="section">Team/Section Name:</label>
+      <input type="text" id="section" name="section" placeholder="e.g., HR, Marketing" required>
+      
+      <label for="meetingDate">Meeting Date:</label>
+      <input type="datetime-local" id="meetingDate" name="meetingDate" required>
+      
+      <label for="attendees">Attendees:</label>
+      <input type="text" id="attendees" name="attendees" placeholder="e.g., John Doe, Jane Smith" required>
+      
+      <label for="agenda">Agenda:</label>
+      <textarea id="agenda" name="agenda" rows="3" placeholder="Enter meeting agenda"></textarea>
+      
+      <label for="decisions">Key Decisions:</label>
+      <textarea id="decisions" name="decisions" rows="3" placeholder="Enter key decisions made"></textarea>
+      
+      <label for="nextSteps">Next Steps:</label>
+      <textarea id="nextSteps" name="nextSteps" rows="3" placeholder="Enter action items and next steps"></textarea>
+      
+      <button type="submit" class="btn">Save to Google Drive</button>
+    </form>
+  </main>
+  
+  <script>
+    // Form submission handler
+    document.getElementById('reportForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      const statusDiv = document.getElementById('status');
+      statusDiv.style.display = 'none';
+      
+      // Get form data
+      const formData = new FormData(this);
+      const params = new URLSearchParams();
+      
+      // Convert FormData to URLSearchParams
+      for (const [key, value] of formData.entries()) {
+        params.append(key, value);
+      }
+      
+      // Send data to Google Apps Script
+      fetch('https://script.google.com/macros/s/AKfycbyVncFBdL5TBjKJTaNSzxfsiJdJIm38RASASWZqkgbSpHSIs1Vuydcc5wyZ8voBnf5Png/exec', {  // ← REPLACE THIS URL
+        method: 'POST',
+        body: params
+      })
+      .then(response => response.json())
+      .then(data => {
+        // Show status message
+        statusDiv.textContent = data.result === 'success' 
+          ? 'Report saved successfully to Google Drive!' 
+          : 'Error: ' + (data.error || 'Unknown error');
+        
+        statusDiv.className = data.result === 'success' ? 'success' : 'error';
+        statusDiv.style.display = 'block';
+        
+        if (data.result === 'success') {
+          // Clear form on success
+          this.reset();
+        }
+        
+        console.log('Response:', data);
+      })
+      .catch(error => {
+        statusDiv.textContent = 'Error: ' + error.message;
+        statusDiv.className = 'error';
+        statusDiv.style.display = 'block';
+        console.error('Error:', error);
+      });
+    });
+  </script>
+</body>
+</html>
