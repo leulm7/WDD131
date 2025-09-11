@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Natey hiyabey</title>
+<style>
+  :root{
+    --bg:#eaf6ff;
+    --card:#ffffff;
+    --accent:#0b66ff;
+    --accent-2:#e53935;
+    --rose:#ff6b8a;
+    --tulip:#ffb74d;
+    --radius:18px;
+    font-family: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial;
+  }
+  body{
+    margin:0;
+    background:linear-gradient(180deg,var(--bg),#f7fbff 60%);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    min-height:100vh;
+    padding:20px;
+    color:#0f172a;
+  }
+  .frame{
+    width:100%;
+    max-width:900px;
+    background:#fff;
+    border-radius:var(--radius);
+    box-shadow:0 20px 40px rgba(9,30,63,0.12);
+    overflow:hidden;
+    display:grid;
+    grid-template-columns: 340px 1fr;
+    min-height:520px;
+  }
+  .left{
+    padding:26px;
+    background:linear-gradient(180deg,rgba(11,102,255,0.04),rgba(229,57,53,0.02));
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    text-align:center;
+  }
+  .title{font-size:22px;font-weight:700;color:var(--accent)}
+  .flowers{display:flex;gap:14px;justify-content:center;margin-top:18px}
+  .flower{
+    width:100px;height:120px;border-radius:16px;
+    background:#fff;
+    display:flex;align-items:center;justify-content:center;flex-direction:column;
+    cursor:pointer;border:2px solid rgba(11,102,255,0.06);
+    box-shadow:0 6px 18px rgba(11,102,255,0.06);
+    transition:transform .18s ease;
+  }
+  .flower:hover{transform:translateY(-6px)}
+  .flower svg{width:56px;height:56px}
+  .flower small{margin-top:8px;font-weight:600;color:var(--accent);font-size:13px}
+  .right{padding:34px;display:flex;flex-direction:column;gap:16px}
+  .card{background:var(--card);border-radius:12px;padding:18px;box-shadow:0 6px 18px rgba(9,30,63,0.04)}
+  .message{font-size:16px;line-height:1.5;color:#071334}
+  .heart{display:inline-block;color:var(--accent-2);font-size:28px;margin-left:6px}
+  .actions{display:flex;gap:10px;margin-top:12px}
+  .btn{padding:10px 14px;border-radius:10px;border:0;cursor:pointer;font-weight:700}
+  .btn-primary{background:linear-gradient(90deg,var(--accent),#0b57e6);color:white}
+  .btn-quiet{background:transparent;border:2px solid rgba(11,102,255,0.08);color:var(--accent)}
+  .modal-backdrop{position:fixed;inset:0;display:none;align-items:center;justify-content:center;
+    background:rgba(2,6,23,0.35);z-index:60}
+  .modal{max-width:560px;background:var(--card);border-radius:14px;padding:20px;text-align:center}
+  .modal h2{margin:8px 0;color:var(--accent)}
+  .modal .final-msg{font-size:16px;color:#071334;margin:12px 0 18px;line-height:1.4}
+</style>
+</head>
+<body>
+<div class="frame">
+  <section class="left">
+    <div class="title">Hey Wde 🌹 something little here for you Pamerit</div>
+    <div class="flowers">
+      <button class="flower" id="roseBtn">
+        <svg viewBox="0 0 64 64"><ellipse cx="32" cy="44" rx="6" ry="12" fill="#4b944d"/><circle cx="32" cy="24" r="10" fill="#ff6b8a"/></svg>
+        <small>Rose</small>
+      </button>
+      <button class="flower" id="tulipBtn1">
+        <svg viewBox="0 0 64 64"><path d="M32 10c-6 6-10 10-10 16 0 6 4 10 10 10s10-4 10-10c0-6-4-10-10-16z" fill="#ffb74d"/><rect x="30" y="26" width="4" height="18" fill="#4b944d"/></svg>
+        <small>Tulip</small>
+      </button>
+      <button class="flower" id="tulipBtn2">
+        <svg viewBox="0 0 64 64"><path d="M32 10c-6 6-10 10-10 16 0 6 4 10 10 10s10-4 10-10c0-6-4-10-10-16z" fill="#ff6b8a"/><rect x="30" y="26" width="4" height="18" fill="#4b944d"/></svg>
+        <small>Promise</small>
+      </button>
+    </div>
+  </section>
+  <section class="right">
+    <div class="card">
+      <div class="message" id="mainMessage">
+        <div style="font-weight:800;font-size:18px;color:var(--accent)">
+          Natey Hiyabey<span class="heart">❤</span>
+        </div>
+        <p>....</p>
+      </div>
+      <div class="actions">
+        <button class="btn btn-primary" id="openAll">Final Surprise</button>
+        <button class="btn btn-quiet" id="resetBtn">Reset</button>
+      </div>
+    </div>
+    <div class="card" id="notesPanel">
+      <div style="font-weight:700;margin-bottom:8px"> I LOVE YOU</div>
+      <div id="notesList" style="color:#6b7280"> <-Click a flower to reveal my heart.</div>
+    </div>
+  </section>
+</div>
+
+<!-- Modal -->
+<div class="modal-backdrop" id="modal">
+  <div class="modal">
+    <h2>Hey Habeneye 💙</h2>
+    <div class="final-msg" id="finalMessage"></div>
+    <div>
+      <button class="btn btn-primary" id="yesBtn">Yes 💆‍♀️</button>
+      <button class="btn btn-quiet" id="noBtn">Hell yeahhhhhh ❤️</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  const messages = {
+    rose: {
+      title: "Natey hiyab 🌹",
+      text: "You are my rose, Habeneye. You are always beautiful inside and out, gentle, kind, and caring. I love you endlessly konjit."
+    },
+    tulip1: {
+      title: "Kisanetey 🌷",
+      text: "Forgive me, my love. I never meant to hurt you. You are too precious to me just like one of your favorite flowers, Tulip, and I will always treat you with care."
+    },
+    tulip2: {
+      title: "Ftuwteyyy 🌸",
+      text: "Wde, I promise to grow, to listen first, and to always protect your heart. My Pamerit I will be more careful next time, my love is forever yours."
+    },
+    final: {
+      text1: "Habeneye, I can’t wait to give you a massage tomorrow. Are you ready for it?",
+      text2: "I will always love you. You are the kindest, and I am grateful for you every day."
+    }
+  };
+
+  const roseBtn = document.getElementById('roseBtn');
+  const tulipBtn1 = document.getElementById('tulipBtn1');
+  const tulipBtn2 = document.getElementById('tulipBtn2');
+  const notesList = document.getElementById('notesList');
+  const resetBtn = document.getElementById('resetBtn');
+  const openAll = document.getElementById('openAll');
+  const modal = document.getElementById('modal');
+  const finalMessage = document.getElementById('finalMessage');
+  const yesBtn = document.getElementById('yesBtn');
+  const noBtn = document.getElementById('noBtn');
+  const shown = new Set();
+
+  function addNote(title, text){
+    const div=document.createElement('div');
+    div.style.padding="10px";
+    div.style.borderRadius="10px";
+    div.style.background="linear-gradient(180deg,#fff,rgba(250,250,255,0.9))";
+    div.innerHTML=`<strong style="color:var(--accent)">${title}</strong><div style="margin-top:6px;color:#444">${text}</div>`;
+    notesList.appendChild(div);
+  }
+
+  roseBtn.onclick=()=>{if(!shown.has('rose')){shown.add('rose');addNote(messages.rose.title,messages.rose.text)}};
+  tulipBtn1.onclick=()=>{if(!shown.has('tulip1')){shown.add('tulip1');addNote(messages.tulip1.title,messages.tulip1.text)}};
+  tulipBtn2.onclick=()=>{if(!shown.has('tulip2')){shown.add('tulip2');addNote(messages.tulip2.title,messages.tulip2.text)}};
+
+  resetBtn.onclick=()=>{shown.clear();notesList.innerHTML="• Click a flower to reveal my heart."};
+
+  openAll.onclick=()=>{
+    finalMessage.innerHTML=`<p>${messages.final.text1}</p><p>${messages.final.text2}</p>`;
+    modal.style.display="flex";
+  };
+
+  yesBtn.onclick=()=>{modal.style.display="none";notesList.innerHTML="<div><strong>She said yes 💙</strong><div>My W-D-E is ready. I love you, Habeneye.</div></div>";};
+  noBtn.onclick=()=>{modal.style.display="none";notesList.innerHTML="<div><strong>She said not tomorrow ❤️</strong><div>That’s okay, my P-A-M-E-R-I-T. My love is patient.</div></div>";};
+
+  modal.onclick=e=>{if(e.target===modal)modal.style.display="none"};
+</script>
+</body>
+</html>
