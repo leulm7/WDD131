@@ -70,6 +70,22 @@
   .modal{max-width:560px;background:var(--card);border-radius:14px;padding:20px;text-align:center}
   .modal h2{margin:8px 0;color:var(--accent)}
   .modal .final-msg{font-size:16px;color:#071334;margin:12px 0 18px;line-height:1.4}
+  @media (max-width: 700px) {
+  .frame {
+    grid-template-columns: 1fr;   /* one column instead of two */
+    min-height: auto;             /* remove fixed height */
+  }
+  .left {
+    padding: 20px;
+  }
+  .flowers {
+    flex-wrap: wrap;              /* flowers wrap nicely on small screens */
+  }
+  .flower {
+    flex: 1 1 100px;              /* let them shrink and wrap */
+  }
+}
+
 </style>
 </head>
 <body>
