@@ -1,0 +1,631 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>PlanBoard — Leul's Interactive Life Plan</title>
+<style>
+  /* --- Basic Reset --- */
+  :root{
+    --bg:#0f1724; --card:#0b1220; --muted:#94a3b8; --accent:#6ee7b7;
+    --glass: rgba(255,255,255,0.03); --danger:#ff6b6b; --glass-2: rgba(255,255,255,0.02);
+    --maxwidth:1100px;
+    font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{
+    margin:0;background:linear-gradient(180deg,#041826 0%, #061423 60%); color:#e6eef6;
+    -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
+    padding:28px 18px;
+    display:flex; justify-content:center;
+  }
+  .app{width:100%;max-width:var(--maxwidth)}
+  header{display:flex;align-items:center;gap:16px;margin-bottom:18px}
+  .logo{
+    width:64px;height:64px;border-radius:12px;background:linear-gradient(135deg,var(--accent),#60a5fa);
+    display:flex;align-items:center;justify-content:center;font-weight:700;color:#042;box-shadow:0 8px 30px rgba(6,11,22,0.6);
+  }
+  h1{font-size:20px;margin:0}
+  .sub{color:var(--muted);font-size:13px}
+  .top-actions{margin-left:auto;display:flex;gap:8px;align-items:center}
+  button, .btn{background:var(--glass);border:1px solid rgba(255,255,255,0.03);color:inherit;padding:10px 12px;border-radius:10px;cursor:pointer}
+  .btn.primary{background:linear-gradient(90deg,var(--accent),#60a5fa);color:#042;font-weight:700;border:none}
+  .btn.ghost{background:transparent;border:1px solid rgba(255,255,255,0.06)}
+  main{display:grid;grid-template-columns: 1fr 360px; gap:18px; align-items:start}
+  @media (max-width:980px){ main{grid-template-columns:1fr} .top-actions{flex-wrap:wrap} }
+  /* --- Left column cards --- */
+  .column{display:flex;flex-direction:column;gap:14px}
+  .card{background:linear-gradient(180deg,var(--card), #061226); padding:16px;border-radius:14px;box-shadow:0 6px 30px rgba(2,6,12,0.6); border:1px solid var(--glass-2)}
+  .section-title{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+  .section-title h2{font-size:15px;margin:0}
+  .muted{color:var(--muted);font-size:13px}
+  /* Plan cards grid */
+  .plans{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+  @media (max-width:980px){ .plans{grid-template-columns:1fr} }
+  .plan-card{padding:12px;border-radius:12px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));}
+  .plan-card h3{margin:0 0 6px 0;font-size:14px}
+  .plan-card p{margin:0;color:var(--muted);font-size:13px}
+  .progress{height:10px;background:rgba(255,255,255,0.04);border-radius:999px;margin-top:10px;overflow:hidden}
+  .progress > i{display:block;height:100%;background:linear-gradient(90deg,var(--accent),#60a5fa);width:0%}
+  /* Task list */
+  .task-list{display:flex;flex-direction:column;gap:8px}
+  .task{display:flex;gap:10px;align-items:flex-start;padding:10px;border-radius:10px;background:rgba(0,0,0,0.2)}
+  .task input[type="checkbox"]{transform:scale(1.2);margin-top:3px}
+  .task .meta{flex:1}
+  .task h4{margin:0;font-size:14px}
+  .task .small{font-size:12px;color:var(--muted);margin-top:6px;display:flex;gap:8px;flex-wrap:wrap}
+  .tag{padding:4px 8px;border-radius:999px;background:rgba(255,255,255,0.03);font-size:12px}
+  .priority{font-weight:700;color:#fff;padding:6px;border-radius:8px}
+  .priority.low{background:rgba(0,0,0,0.2)}
+  .priority.med{background:#f59e0b;color:#042}
+  .priority.high{background:var(--danger);color:#fff}
+  /* Right column */
+  .right .mini{display:flex;gap:10px;align-items:center}
+  .avatar{width:44px;height:44px;border-radius:10px;background:linear-gradient(135deg,#60a5fa,#6ee7b7);display:flex;align-items:center;justify-content:center;color:#042;font-weight:700}
+  .gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:8px}
+  .gallery .thumb{border-radius:8px;background:linear-gradient(180deg,#06242b,#092634);padding:8px;display:flex;align-items:center;justify-content:center;height:80px}
+  .templates{display:flex;flex-direction:column;gap:8px}
+  /* forms */
+  .form-row{display:flex;gap:8px;align-items:center}
+  input[type="text"], input[type="date"], select, textarea{
+    background:transparent;border:1px solid rgba(255,255,255,0.04);padding:10px;border-radius:8px;color:inherit;font-size:14px;width:100%;
+  }
+  textarea{min-height:80px;resize:vertical}
+  .small-muted{font-size:12px;color:var(--muted)}
+  footer{margin-top:18px;color:var(--muted);font-size:12px;display:flex;justify-content:space-between;align-items:center}
+  .controls{display:flex;gap:8px;flex-wrap:wrap}
+  /* modal */
+  .modal{position:fixed;inset:0;background:linear-gradient(180deg,rgba(2,6,12,0.6), rgba(2,6,12,0.85));display:none;align-items:center;justify-content:center;padding:20px}
+  .modal.open{display:flex}
+  .modal .dialog{width:100%;max-width:720px;background:#071226;padding:18px;border-radius:12px}
+  .flex{display:flex;gap:8px;align-items:center}
+  .chip{padding:6px 8px;border-radius:8px;background:rgba(255,255,255,0.03);font-size:13px}
+  .muted-side{color:var(--muted);font-size:13px}
+  /* tiny responsive tweaks */
+  .right{position:relative}
+  .note{white-space:pre-wrap}
+  .hidden-sm{display:inline}
+  @media (max-width:700px){ .hidden-sm{display:none} }
+</style>
+</head>
+<body>
+  <div class="app" role="application" aria-label="PlanBoard">
+    <header>
+      <div class="logo" aria-hidden="true">PB</div>
+      <div>
+        <h1>PlanBoard — Your Interactive Life Plan</h1>
+        <div class="sub">Priorities, sprints, budgets, templates — shareable & printable</div>
+      </div>
+
+      <div class="top-actions">
+        <label class="chip" title="Shareable export">Export / Import</label>
+        <button class="btn ghost" id="exportBtn">Export JSON</button>
+        <button class="btn ghost" id="importBtn">Import JSON</button>
+
+        <label class="chip" id="roleLabel">Mode: <strong id="roleText">Personal</strong></label>
+        <select id="roleSelect" aria-label="Mode select">
+          <option value="personal">Personal</option>
+          <option value="family">Family</option>
+        </select>
+
+        <button class="btn primary" id="addTaskBtn">+ Add Task</button>
+      </div>
+    </header>
+
+    <main>
+      <section class="column">
+        <div class="card">
+          <div class="section-title">
+            <div>
+              <h2>Overview</h2>
+              <div class="muted">Top 3 priorities — set them below</div>
+            </div>
+          </div>
+
+          <div class="plans" id="priorityCards">
+            <!-- priority cards injected by JS -->
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="section-title">
+            <h2>Tasks & Checklists</h2>
+            <div class="muted">Assign tasks, set due dates, and track progress</div>
+          </div>
+
+          <div class="task-list" id="taskList" aria-live="polite">
+            <!-- tasks rendered here -->
+          </div>
+
+          <div style="margin-top:12px;display:flex;gap:8px;align-items:center">
+            <select id="filterAssignee">
+              <option value="all">Filter: All assignees</option>
+              <option value="me">Me</option>
+              <option value="gf">Girlfriend</option>
+              <option value="parents">Parents</option>
+            </select>
+            <select id="filterPriority">
+              <option value="all">All priorities</option>
+              <option value="high">High</option>
+              <option value="med">Medium</option>
+              <option value="low">Low</option>
+            </select>
+            <button class="btn ghost" id="resetBtn">Reset Demo Data</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="section-title">
+            <h2>Reading & Notes</h2>
+            <div class="muted">Longer explanations, advice, and templates</div>
+          </div>
+          <div class="note" id="longNotes" contenteditable="true" style="min-height:140px;padding:8px;border-radius:8px;background:rgba(255,255,255,0.01);">
+<!-- Pre-filled long notes to guide you; edit freely. -->
+<h3 style="margin:0 0 8px 0">How to use this plan</h3>
+<p style="margin:0 0 6px 0" class="muted-side">Use the sprint tasks for urgent items this month. Use the 3–12 month cards for skill & finance planning. Use the 1–3 year cards for big roadmap goals. Share exported JSON with your girlfriend or your parents so they can import and view or collaborate.</p>
+</div>
+        </div>
+
+      </section>
+
+      <aside class="right">
+        <div class="card">
+          <div style="display:flex;justify-content:space-between;align-items:center">
+            <div>
+              <div class="flex mini">
+                <div class="avatar" aria-hidden="true">L</div>
+                <div>
+                  <div style="font-weight:700">Leul</div>
+                  <div class="muted-side">Student • aspiring ML & data</div>
+                </div>
+              </div>
+            </div>
+            <div style="text-align:right">
+              <div class="muted-side">Progress</div>
+              <div style="font-weight:700" id="overallPercent">0%</div>
+            </div>
+          </div>
+
+          <div style="margin-top:12px" class="templates">
+            <div class="small-muted">Quick templates</div>
+            <button class="btn ghost" id="internMsg">Internship message</button>
+            <button class="btn ghost" id="familyMsg">Family availability</button>
+            <button class="btn ghost" id="gfMsg">Girlfriend conversation</button>
+          </div>
+
+          <div style="margin-top:12px">
+            <div class="small-muted">Image gallery</div>
+            <div class="gallery" aria-hidden="false">
+              <div class="thumb">🎒</div>
+              <div class="thumb">📅</div>
+              <div class="thumb">💼</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="section-title"><h2>Finance mini-planner</h2><div class="muted">Quick budget targets</div></div>
+          <div style="display:flex;gap:8px">
+            <input id="income" type="text" placeholder="Monthly income (numbers only)"/>
+            <button class="btn ghost" id="calcBudget">Calc</button>
+          </div>
+          <div style="margin-top:8px" id="budgetResult" class="small-muted">Enter income and click Calc.</div>
+          <div style="margin-top:10px" class="small-muted">Savings buckets</div>
+          <div style="display:flex;gap:8px;margin-top:8px">
+            <button class="btn" id="exportNote">Print</button>
+            <button class="btn ghost" id="clearLocal">Clear saved data</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="section-title"><h2>Share & backup</h2><div class="muted">Export / import / print</div></div>
+          <div style="display:flex;gap:8px">
+            <button class="btn ghost" id="downloadJson">Download JSON</button>
+            <button class="btn" id="printBtn">Print</button>
+          </div>
+          <div style="margin-top:10px" class="muted-side">Tip: Export before major edits as a backup.</div>
+        </div>
+      </aside>
+    </main>
+
+    <footer>
+      <div>PlanBoard • Built for you • Local-only saves (browser storage)</div>
+      <div class="controls">
+        <button class="btn ghost" id="helpBtn">Help</button>
+        <button class="btn ghost" id="resetAll">Factory reset</button>
+      </div>
+    </footer>
+  </div>
+
+  <!-- Modal -->
+  <div class="modal" id="modal">
+    <div class="dialog" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <h3 id="modalTitle">Modal</h3>
+        <button class="btn" id="closeModal">Close</button>
+      </div>
+      <div id="modalBody" style="margin-top:12px"></div>
+    </div>
+  </div>
+
+<script>
+/* ---------------------------
+   PlanBoard — Single-file JS
+   Features:
+   - tasks saved to localStorage
+   - add/edit/delete tasks
+   - assign tasks to me/gf/parents
+   - progress calculation
+   - export/import JSON
+   - demo data + reset
+   --------------------------- */
+
+const STORAGE_KEY = 'planboard_v1';
+const app = {
+  state: {
+    role: 'personal',
+    priorities: [
+      {id:'p1', title:'Finish semester', desc:'Keep grades & pass courses', progress:30},
+      {id:'p2', title:'Secure internship', desc:'Start/finish internship + recommend', progress:10},
+      {id:'p3', title:'Save for engagement & travel', desc:'Emergency + engagement fund', progress:6},
+    ],
+    tasks: [
+      {id:'t1', title:'Write calendar & deadlines', assignee:'me', priority:'high', due:'', done:false, notes:'Put everything on Google Calendar or paper.'},
+      {id:'t2', title:'Create simple monthly budget', assignee:'me', priority:'med', due:'', done:false, notes:'Follow 50/20/10/20 split then adjust.'},
+      {id:'t3', title:'Message internship manager', assignee:'me', priority:'high', due:'', done:false, notes:'Use the short script provided in templates.'},
+      {id:'t4', title:'Family values conversation', assignee:'parents', priority:'low', due:'2025-12-30', done:false, notes:'Set expectations.'},
+      {id:'t5', title:'Values conversation with girlfriend', assignee:'gf', priority:'med', due:'', done:false, notes:'Talk about timeline and privacy.'},
+    ]
+  }
+}
+
+/* ----------------- Utilities ----------------- */
+function uid(prefix='id'){return prefix + Math.random().toString(36).slice(2,9)}
+function save(){ localStorage.setItem(STORAGE_KEY, JSON.stringify(app.state)); renderAll(); }
+function load(){
+  const raw = localStorage.getItem(STORAGE_KEY);
+  if(raw){
+    try{ app.state = JSON.parse(raw); }catch(e){ console.error('load error',e) }
+  } else {
+    save();
+  }
+}
+function resetDemo(){ localStorage.removeItem(STORAGE_KEY); load(); }
+function factoryReset(){ localStorage.clear(); location.reload(); }
+
+/* ----------------- Rendering ----------------- */
+function renderPriorities(){
+  const container = document.getElementById('priorityCards');
+  container.innerHTML = '';
+  app.state.priorities.forEach(p=>{
+    const el = document.createElement('div'); el.className = 'plan-card';
+    el.innerHTML = `<h3 contenteditable="true" data-id="${p.id}" data-type="priority-title">${escapeHtml(p.title)}</h3>
+      <p contenteditable="true" data-id="${p.id}" data-type="priority-desc">${escapeHtml(p.desc)}</p>
+      <div class="progress" title="Progress"><i style="width:${p.progress||0}%"></i></div>
+      <div class="small-muted" style="margin-top:8px"><span class="tag">Progress ${p.progress||0}%</span>
+      <button class="btn ghost" data-action="inc" data-id="${p.id}">+5%</button>
+      <button class="btn ghost" data-action="dec" data-id="${p.id}">-5%</button></div>`;
+    container.appendChild(el);
+  });
+}
+
+function priorityBadge(priority){
+  if(priority === 'high') return '<span class="priority high">HIGH</span>';
+  if(priority === 'med')  return '<span class="priority med">MED</span>';
+  return '<span class="priority low">LOW</span>';
+}
+
+function renderTasks(){
+  const list = document.getElementById('taskList');
+  list.innerHTML = '';
+  const filterAssignee = document.getElementById('filterAssignee').value;
+  const filterPriority = document.getElementById('filterPriority').value;
+
+  app.state.tasks.forEach(task => {
+    if(filterAssignee !== 'all'){
+      if(filterAssignee === 'me' && task.assignee !== 'me') return;
+      if(filterAssignee === 'gf' && task.assignee !== 'gf') return;
+      if(filterAssignee === 'parents' && task.assignee !== 'parents') return;
+    }
+    if(filterPriority !== 'all' && task.priority !== filterPriority) return;
+
+    const t = document.createElement('div'); t.className='task';
+    t.innerHTML = `
+      <input type="checkbox" ${task.done? 'checked':''} data-id="${task.id}" aria-label="Mark done">
+      <div class="meta">
+        <h4 data-id="${task.id}" data-type="title" contenteditable="true">${escapeHtml(task.title)}</h4>
+        <div class="small">
+          <span class="tag">${task.assignee==='me'?'Me':task.assignee==='gf'?'Girlfriend':'Parents'}</span>
+          <span class="tag">${priorityBadge(task.priority)}</span>
+          <span class="muted-side">${task.due? 'Due: '+task.due : 'No due date'}</span>
+          <button class="btn ghost" data-action="edit" data-id="${task.id}">Edit</button>
+          <button class="btn ghost" data-action="del" data-id="${task.id}">Delete</button>
+        </div>
+        <div class="muted" data-id="${task.id}" data-type="notes">${escapeHtml(task.notes||'')}</div>
+      </div>
+    `;
+    list.appendChild(t);
+  });
+  // attach listeners inside list
+}
+
+function renderOverallPercent(){
+  const total = app.state.tasks.length || 1;
+  const done = app.state.tasks.filter(t=>t.done).length;
+  const percent = Math.round((done/total)*100);
+  document.getElementById('overallPercent').textContent = percent + '%';
+}
+
+/* ----------------- Events & actions ----------------- */
+function attachUI(){
+  document.getElementById('addTaskBtn').addEventListener('click', ()=>openAddTaskModal());
+  document.getElementById('exportBtn').addEventListener('click', ()=>downloadJSON());
+  document.getElementById('downloadJson').addEventListener('click', ()=>downloadJSON());
+  document.getElementById('importBtn').addEventListener('click', ()=>openImportModal());
+  document.getElementById('resetBtn').addEventListener('click', ()=>resetDemo());
+  document.getElementById('resetAll').addEventListener('click', ()=>{ if(confirm('Factory reset? This clears all local data.')) factoryReset(); });
+  document.getElementById('helpBtn').addEventListener('click', ()=>showModal('Help', helpHtml()));
+  document.getElementById('closeModal').addEventListener('click', ()=>closeModal());
+  document.getElementById('modal').addEventListener('click', (e)=>{ if(e.target.id==='modal') closeModal(); });
+
+  document.getElementById('roleSelect').addEventListener('change', (e)=>{
+    app.state.role = e.target.value === 'family' ? 'family' : 'personal';
+    document.getElementById('roleText').textContent = app.state.role==='family' ? 'Family' : 'Personal';
+    // hide private notes if family
+    document.getElementById('longNotes').contentEditable = app.state.role === 'personal';
+    save();
+  });
+
+  document.getElementById('filterAssignee').addEventListener('change', renderTasks);
+  document.getElementById('filterPriority').addEventListener('change', renderTasks);
+
+  document.getElementById('calcBudget').addEventListener('click', ()=>{
+    const incomeRaw = document.getElementById('income').value.replace(/[^0-9.\-]/g,'');
+    const income = parseFloat(incomeRaw) || 0;
+    const res = document.getElementById('budgetResult');
+    if(!income) return res.textContent = 'Enter a numeric monthly income (e.g., 1200)';
+    const essentials = Math.round(income * 0.5);
+    const savings = Math.round(income * 0.2);
+    const debt = Math.round(income * 0.1);
+    const discretionary = Math.round(income * 0.2);
+    res.innerHTML = `Essentials: ${essentials} · Savings: ${savings} · Debt: ${debt} · Extra: ${discretionary}
+      <div class="small-muted" style="margin-top:6px">Tip: split savings into emergency, engagement, moving.</div>`;
+  });
+
+  document.getElementById('clearLocal').addEventListener('click', ()=>{ if(confirm('Clear saved plan?')){ localStorage.removeItem(STORAGE_KEY); load(); renderAll(); } });
+
+  document.getElementById('internMsg').addEventListener('click', ()=>showModal('Internship message', internMessage()));
+  document.getElementById('familyMsg').addEventListener('click', ()=>showModal('Family message', familyMessage()));
+  document.getElementById('gfMsg').addEventListener('click', ()=>showModal('Girlfriend template', gfMessage()));
+  document.getElementById('printBtn').addEventListener('click', ()=>window.print());
+  document.getElementById('exportNote').addEventListener('click', ()=>window.print());
+
+  // delegated events for task list
+  document.getElementById('taskList').addEventListener('click', (e)=>{
+    const a = e.target;
+    const id = a.getAttribute('data-id');
+    const action = a.getAttribute('data-action');
+    if(action === 'del') { app.state.tasks = app.state.tasks.filter(t=>t.id!==id); save(); }
+    if(action === 'edit') openEditTaskModal(id);
+    if(a.tagName === 'INPUT' && a.type === 'checkbox'){
+      const task = app.state.tasks.find(t=>t.id===id);
+      if(task) task.done = a.checked;
+      save();
+    }
+    renderAll();
+  });
+
+  // contenteditable changes (titles/notes)
+  document.addEventListener('input', (e)=>{
+    const t = e.target;
+    const id = t.getAttribute('data-id');
+    const type = t.getAttribute('data-type');
+    if(!id || !type) return;
+    if(type === 'title'){
+      const task = app.state.tasks.find(x=>x.id===id);
+      if(task) task.title = t.textContent.trim();
+    } else if(type === 'notes'){
+      const task = app.state.tasks.find(x=>x.id===id);
+      if(task) task.notes = t.textContent.trim();
+    } else if(type === 'priority-title' || type === 'priority-desc'){
+      const p = app.state.priorities.find(x=>x.id===id);
+      if(p){
+        if(type==='priority-title') p.title = t.textContent.trim();
+        else p.desc = t.textContent.trim();
+      }
+    }
+    save();
+  });
+
+  // increment/decrement priority progress buttons
+  document.getElementById('priorityCards').addEventListener('click',(e)=>{
+    const btn = e.target;
+    const id = btn.getAttribute('data-id');
+    const action = btn.getAttribute('data-action');
+    if(!id || !action) return;
+    const p = app.state.priorities.find(x=>x.id===id);
+    if(!p) return;
+    if(action==='inc') p.progress = Math.min(100,(p.progress||0)+5);
+    if(action==='dec') p.progress = Math.max(0,(p.progress||0)-5);
+    save();
+  });
+}
+
+/* ----------------- Modals ----------------- */
+function showModal(title, html){
+  document.getElementById('modalTitle').textContent = title;
+  const body = document.getElementById('modalBody');
+  body.innerHTML = typeof html === 'string' ? html : '';
+  document.getElementById('modal').classList.add('open');
+}
+function closeModal(){ document.getElementById('modal').classList.remove('open'); }
+
+/* ----------------- Task creation/editing UIs ----------------- */
+function openAddTaskModal(){
+  const html = `
+    <div style="display:grid;gap:8px">
+      <label>Title<input id="newTitle" type="text" placeholder="Short task title"></label>
+      <label>Assignee
+        <select id="newAssignee"><option value="me">Me</option><option value="gf">Girlfriend</option><option value="parents">Parents</option></select>
+      </label>
+      <label>Priority
+        <select id="newPriority"><option value="high">High</option><option value="med">Medium</option><option value="low">Low</option></select>
+      </label>
+      <label>Due date<input id="newDue" type="date"></label>
+      <label>Notes<textarea id="newNotes" placeholder="Notes or steps..."></textarea></label>
+      <div style="display:flex;gap:8px;justify-content:flex-end">
+        <button class="btn ghost" id="cancelAdd">Cancel</button>
+        <button class="btn primary" id="createAdd">Create</button>
+      </div>
+    </div>
+  `;
+  showModal('Add task', html);
+  document.getElementById('cancelAdd').addEventListener('click', closeModal);
+  document.getElementById('createAdd').addEventListener('click', ()=>{
+    const title = document.getElementById('newTitle').value.trim();
+    if(!title) return alert('Add a title');
+    const task = {
+      id: uid('t'),
+      title,
+      assignee: document.getElementById('newAssignee').value,
+      priority: document.getElementById('newPriority').value,
+      due: document.getElementById('newDue').value || '',
+      done:false,
+      notes: document.getElementById('newNotes').value || ''
+    };
+    app.state.tasks.unshift(task);
+    save();
+    closeModal();
+  });
+}
+
+function openEditTaskModal(id){
+  const t = app.state.tasks.find(x=>x.id===id);
+  if(!t) return;
+  const html = `
+    <div style="display:grid;gap:8px">
+      <label>Title<input id="editTitle" type="text" value="${escapeHtml(t.title)}"></label>
+      <label>Assignee
+        <select id="editAssignee"><option value="me">Me</option><option value="gf">Girlfriend</option><option value="parents">Parents</option></select>
+      </label>
+      <label>Priority
+        <select id="editPriority"><option value="high">High</option><option value="med">Medium</option><option value="low">Low</option></select>
+      </label>
+      <label>Due date<input id="editDue" type="date" value="${t.due||''}"></label>
+      <label>Notes<textarea id="editNotes">${escapeHtml(t.notes||'')}</textarea></label>
+      <div style="display:flex;gap:8px;justify-content:flex-end">
+        <button class="btn ghost" id="cancelEdit">Cancel</button>
+        <button class="btn" id="removeTask">Delete</button>
+        <button class="btn primary" id="saveEdit">Save</button>
+      </div>
+    </div>
+  `;
+  showModal('Edit task', html);
+  document.getElementById('editAssignee').value = t.assignee;
+  document.getElementById('editPriority').value = t.priority;
+  document.getElementById('cancelEdit').addEventListener('click', closeModal);
+  document.getElementById('removeTask').addEventListener('click', ()=>{
+    if(confirm('Delete this task?')) app.state.tasks = app.state.tasks.filter(x=>x.id!==id);
+    save(); closeModal();
+  });
+  document.getElementById('saveEdit').addEventListener('click', ()=>{
+    t.title = document.getElementById('editTitle').value.trim();
+    t.assignee = document.getElementById('editAssignee').value;
+    t.priority = document.getElementById('editPriority').value;
+    t.due = document.getElementById('editDue').value || '';
+    t.notes = document.getElementById('editNotes').value || '';
+    save(); closeModal();
+  });
+}
+
+/* ----------------- Export / Import ----------------- */
+function downloadJSON(){
+  const data = JSON.stringify(app.state, null, 2);
+  const blob = new Blob([data], {type:'application/json'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = 'planboard-export.json'; document.body.appendChild(a); a.click();
+  a.remove(); URL.revokeObjectURL(url);
+}
+
+function openImportModal(){
+  const html = `
+    <div style="display:grid;gap:8px">
+      <div class="small-muted">Choose a JSON file exported from PlanBoard</div>
+      <input type="file" id="importFile" accept="application/json" />
+      <div style="display:flex;gap:8px;justify-content:flex-end">
+        <button class="btn ghost" id="cancelImport">Cancel</button>
+        <button class="btn primary" id="doImport">Import</button>
+      </div>
+    </div>
+  `;
+  showModal('Import JSON', html);
+  document.getElementById('cancelImport').addEventListener('click', closeModal);
+  document.getElementById('doImport').addEventListener('click', ()=>{
+    const file = document.getElementById('importFile').files[0];
+    if(!file) return alert('Pick a file first');
+    const reader = new FileReader();
+    reader.onload = (ev)=>{
+      try{
+        const obj = JSON.parse(ev.target.result);
+        if(!obj.tasks || !obj.priorities) return alert('Invalid PlanBoard file');
+        app.state = obj;
+        save();
+        closeModal();
+      }catch(err){ alert('Invalid JSON'); }
+    };
+    reader.readAsText(file);
+  });
+}
+
+/* ----------------- Pre-made templates ----------------- */
+function internMessage(){
+  return `<div><pre style="white-space:pre-wrap">Hi [Manager name],
+
+I’m excited to start the internship. I have a family event on [date] and wanted to confirm my schedule and start date so I can plan my travel and availability. Please let me know whether I should begin on [start date] or if there’s any paperwork/time I should complete beforehand.
+
+Thanks for your help,
+Leul</pre></div>`;
+}
+function familyMessage(){
+  return `<div><pre style="white-space:pre-wrap">Hi family,
+
+I want to help and support our family, and I’m balancing school and an internship right now. This month I can contribute [amount] or [time]. I’d appreciate help with [specific request]. I love you and want to do what I can while finishing school.
+
+— Leul</pre></div>`;
+}
+function gfMessage(){
+  return `<div><pre style="white-space:pre-wrap">Hi [name],
+
+I love where our relationship is going. I’d like to talk about timelines and expectations (engagement, privacy for content, and how we support each other while I finish school). When would be a good time to talk about this?
+
+— Leul</pre></div>`;
+}
+function helpHtml(){
+  return `<div>
+    <p class="muted-side">Short guide:</p>
+    <ul>
+      <li>Add tasks with the +Add Task button; assign to Me/Girlfriend/Parents.</li>
+      <li>Edit any content by clicking the title or notes (inline edit).</li>
+      <li>Export JSON to share; Import to load a shared plan.</li>
+      <li>Use the role dropdown to show Family view (some private editing locked).</li>
+      <li>Print to create a PDF version for meetings.</li>
+    </ul>
+  </div>`;
+}
+
+/* ----------------- Small helpers & safety ----------------- */
+function escapeHtml(s=''){
+  return String(s||'').replace(/[&<>"']/g, (c)=>({
+    '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;'
+  })[c]);
+}
+
+/* ----------------- Boot ----------------- */
+function renderAll(){ renderPriorities(); renderTasks(); renderOverallPercent(); }
+load(); attachUI(); renderAll();
+
+</script>
+</body>
+</html>

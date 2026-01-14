@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title> Aytihazeley Gelaye 🎬❤️</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(to bottom right, #ffe6f0, #fff7e6);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      overflow: hidden;
+    }
+
+    .container {
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 20px;
+      padding: 30px 40px;
+      max-width: 500px;
+      text-align: center;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+      position: relative;
+    }
+
+    h1 {
+      color: #f65a83;
+      margin-bottom: 10px;
+      font-size: 2em;
+    }
+
+    p {
+      font-size: 1em;
+      line-height: 1.5em;
+      margin: 20px 0;
+    }
+
+    .interactive {
+      cursor: pointer;
+      display: inline-block;
+      margin: 15px;
+      transition: transform 0.3s;
+    }
+
+    .interactive:hover {
+      transform: scale(1.2) rotate(5deg);
+    }
+
+    #alarm, #chair, #popcorn, #heart {
+      font-size: 50px;
+    }
+
+    #message {
+      margin-top: 20px;
+      font-size: 1em;
+      min-height: 40px;
+      color: #333;
+    }
+
+    .pulsate {
+      animation: pulse 1s infinite;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.2); }
+      100% { transform: scale(1); }
+    }
+
+    #confetti {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
+
+    .confetto {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      background: #f65a83;
+      opacity: 0.8;
+      transform: rotate(45deg);
+      animation: fall 2s linear forwards;
+    }
+
+    @keyframes fall {
+      0% { transform: translateY(0) rotate(45deg); }
+      100% { transform: translateY(400px) rotate(405deg); opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Aytihazeley Gelaye❤️</h1>
+    <p>Click the icons below to see my promises and apologies! muahhhh</p>
+
+    <div>
+      <span id="alarm" class="interactive">⏰</span>
+      <span id="chair" class="interactive">🪑</span>
+      <span id="popcorn" class="interactive">🍿</span>
+      <span id="heart" class="interactive pulsate">❤️</span>
+    </div>
+
+    <div id="message"></div>
+
+    <button id="celebrateBtn" class="interactive" style="margin-top: 20px; padding: 10px 20px; border-radius: 8px; background:#f65a83; color:white; border:none; font-weight:bold;">Celebrate Our Future!</button>
+
+    <canvas id="confetti"></canvas>
+  </div>
+
+  <script>
+    const message = document.getElementById('message');
+    const alarm = document.getElementById('alarm');
+    const chair = document.getElementById('chair');
+    const popcorn = document.getElementById('popcorn');
+    const heart = document.getElementById('heart');
+    const celebrateBtn = document.getElementById('celebrateBtn');
+    const confettiCanvas = document.getElementById('confetti');
+    const ctx = confettiCanvas.getContext('2d');
+
+    confettiCanvas.width = window.innerWidth;
+    confettiCanvas.height = window.innerHeight;
+
+    alarm.addEventListener('click', () => {
+      message.textContent = "Gelaye, I promise to hard work and never miss your call again! I will buy that clock as i told you and make sure it is under use⏰";
+    });
+
+    chair.addEventListener('click', () => {
+      message.textContent = "I'llstay awake going out in the snow or standing or sitting on a wooden chair 🪑 during our movie nights so I don't fall asleep! I am sorry my gela";
+    });
+
+    popcorn.addEventListener('click', () => {
+      message.textContent = "We can continue the series 'The Rookie' whenever you want! Even today!🍿";
+    });
+
+    heart.addEventListener('click', () => {
+      message.textContent = "And just in case I ever slip like this again (which I promise I will work hard not to), I’d hope you could choose love over ego and call me just one just one time. We are going to have a lovely future, and if we’re going to be a role model for Hyab, Happy and all of them, I want to make sure we stay communicated and connected my love. Thank you for being patient and loving me even when I mess up. I love you, and I will be sure to improve gelaye.";
+    });
+
+    celebrateBtn.addEventListener('click', () => {
+      message.textContent = "Yefkreki... 💖";
+      launchConfetti();
+    });
+
+    function launchConfetti() {
+      for (let i = 0; i < 100; i++) {
+        const confetto = document.createElement('div');
+        confetto.classList.add('confetto');
+        confetto.style.left = Math.random() * confettiCanvas.width + 'px';
+        confetto.style.background = ['#f65a83','#f08a5d','#fcd580','#ff96ad'][Math.floor(Math.random()*4)];
+        document.body.appendChild(confetto);
+        setTimeout(() => confetto.remove(), 2000);
+      }
+    }
+  </script>
+</body>
+</html>
