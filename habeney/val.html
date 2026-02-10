@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Valentine ❤️</title>
+
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Great+Vibes&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      background: linear-gradient(135deg, #ffd1dc, #ffe6eb);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      overflow-x: hidden;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 700px;
+      background: white;
+      border-radius: 25px;
+      padding: 25px 20px 40px;
+      text-align: center;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    }
+
+    /* IMAGE */
+    .hero-img {
+      width: 100%;
+      height: auto;
+      border-radius: 20px;
+      object-fit: cover;
+      margin-bottom: 20px;
+    }
+
+    /* TITLE */
+    h1 {
+      font-family: 'Great Vibes', cursive;
+      font-size: clamp(2.2rem, 5vw, 3rem);
+      color: #e63946;
+      margin-bottom: 15px;
+    }
+
+    /* TYPEWRITER TEXT */
+    .typewriter {
+      font-size: clamp(1rem, 2.8vw, 1.2rem);
+      color: #444;
+      min-height: 120px;
+      line-height: 1.7;
+      padding: 0 10px;
+    }
+
+    /* COUNTDOWN */
+    .countdown {
+      margin-top: 25px;
+      font-size: clamp(1.1rem, 3vw, 1.3rem);
+      font-weight: 600;
+      color: #e63946;
+    }
+
+    /* BUTTON */
+    .btn {
+      margin-top: 30px;
+      padding: 14px 28px;
+      font-size: 1rem;
+      border: none;
+      border-radius: 30px;
+      background: #e63946;
+      color: white;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .btn:hover {
+      background: #c9182b;
+      transform: scale(1.05);
+    }
+
+    /* MOBILE EXTRA FIX */
+    @media (max-width: 480px) {
+      .container {
+        padding: 20px 15px 35px;
+      }
+
+      .typewriter {
+        min-height: 150px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+
+    <!-- YOUR PHOTO -->
+    <img src="IMG_8335.jpeg" class="hero-img" />
+
+    <h1>Hey Gelaye ❤️</h1>
+
+    <div class="typewriter" id="text"></div>
+
+    <div class="countdown" id="countdown"></div>
+
+    <button class="btn">Be My Valentine? ❤️</button>
+
+  </div>
+
+  <!-- MUSIC AUTOPLAY -->
+  <audio autoplay loop>
+    <source src="love-song.mp3" type="audio/mpeg">
+  </audio>
+
+  <script>
+    /* TYPEWRITER MESSAGES */
+    const messages = [
+      "I know I should’ve asked you sooner...",
+      "And I’m sorry if I ever made you feel unchosen.",
+      "The truth is… you’ve always had my heart.",
+      "Even from miles away.",
+      "Long distance isn’t easy…",
+      "But loving you is.",
+      "So I want to ask you the right way now…"
+    ];
+
+    let msgIndex = 0;
+    let charIndex = 0;
+    const speed = 45;
+    const textEl = document.getElementById("text");
+
+    function typeWriter() {
+      if (charIndex < messages[msgIndex].length) {
+        textEl.innerHTML += messages[msgIndex].charAt(charIndex);
+        charIndex++;
+        setTimeout(typeWriter, speed);
+      } else {
+        setTimeout(() => {
+          textEl.innerHTML += "<br><br>";
+          msgIndex++;
+          charIndex = 0;
+          if (msgIndex < messages.length) typeWriter();
+        }, 900);
+      }
+    }
+
+    typeWriter();
+
+    /* COUNTDOWN */
+    const targetDate = new Date("Feb 14, 2026 00:00:00").getTime();
+
+    const countdownEl = document.getElementById("countdown");
+
+    setInterval(() => {
+      const now = new Date().getTime();
+      const distance = targetDate - now;
+
+      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((distance / (1000 * 60 * 60)) % 24);
+
+      countdownEl.innerHTML = `Counting down to Valentine’s Day ❤️ — ${days} days, ${hours} hours left`;
+    }, 1000);
+  </script>
+</body>
+</html>
