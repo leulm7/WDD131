@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Our Valentine Date ❤️</title>
+
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Great+Vibes&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      background: linear-gradient(135deg, #ffd1dc, #ffe6eb);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      overflow-x: hidden;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 750px;
+      background: white;
+      border-radius: 25px;
+      padding: 25px 20px 50px;
+      text-align: center;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    }
+
+    .hero-img {
+      width: 100%;
+      height: auto;
+      border-radius: 20px;
+      object-fit: cover;
+      margin-bottom: 20px;
+    }
+
+    h1 {
+      font-family: 'Great Vibes', cursive;
+      font-size: clamp(2.2rem, 5vw, 3rem);
+      color: #e63946;
+      margin-bottom: 10px;
+    }
+
+    /* INVITATION CARD */
+    .invite-card {
+      background: #fff0f5;
+      border-radius: 20px;
+      padding: 20px;
+      margin: 25px 0;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+      text-align: left;
+      line-height: 1.7;
+    }
+
+    .invite-card h2 {
+      text-align: center;
+      color: #e63946;
+      margin-bottom: 15px;
+    }
+
+    /* CLICK PLANS */
+    .plans-box {
+      text-align: center;
+    }
+
+    .plans-text {
+      font-size: 1.1rem;
+      color: #444;
+      margin-top: 15px;
+      min-height: 70px;
+      line-height: 1.6;
+      padding: 0 10px;
+    }
+
+    .next-btn {
+      margin-top: 20px;
+      padding: 12px 22px;
+      border: none;
+      border-radius: 999px;
+      background: #e63946;
+      color: white;
+      font-size: 1rem;
+      cursor: pointer;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+      transition: 0.25s;
+    }
+
+    .next-btn:hover {
+      transform: scale(1.05);
+      background: #c9182b;
+    }
+
+    /* SLIDESHOW */
+    .slideshow {
+      margin-top: 40px;
+    }
+
+    .slideshow h2 {
+      color: #e63946;
+      margin-bottom: 15px;
+    }
+
+    .slides {
+  position: relative;
+  width: 100%;
+  height: 420px; /* taller so posters fit nicely */
+  overflow: hidden;
+  border-radius: 20px;
+  background: #00000010; /* soft background */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.slides img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain; /* shows full poster */
+  position: absolute;
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
+}
+
+.slides img.active {
+  opacity: 1;
+}
+
+
+    .slides img.active {
+      opacity: 1;
+    }
+
+    /* COMING SOON */
+    .coming-soon {
+      margin-top: 40px;
+      padding: 25px;
+      background: #fff0f5;
+      border-radius: 20px;
+    }
+
+    .coming-soon h2 {
+      color: #e63946;
+      margin-bottom: 10px;
+    }
+
+    .movie-caption {
+  margin-top: 15px;
+  background: #fff0f5;
+  padding: 15px;
+  border-radius: 15px;
+  text-align: center;
+}
+
+.movie-caption h3 {
+  color: #e63946;
+  margin-bottom: 8px;
+}
+
+.movie-caption p {
+  font-size: 0.95rem;
+  color: #444;
+  line-height: 1.5;
+}
+
+
+    @media (max-width: 480px) {
+      .slides {
+        height: 360px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+
+    <img src="IMG_8335.jpeg" class="hero-img" />
+
+    <h1>Hey Gelaye ❤️</h1>
+
+     <!-- CLICK‑THROUGH PLANS -->
+     <div class="invite-card plans-box">
+        <h2>❤️ Little Plans For Our Night</h2>
+  
+        <p id="planText" class="plans-text">
+          Click next to start unfolding our night… ✨
+        </p>
+  
+        <button class="next-btn" onclick="nextPlan()">Next ❤️</button>
+      </div>
+
+    <!-- INVITATION CARD -->
+    <div class="invite-card">
+      <h2>💌 Our Valentine’s Online Date</h2>
+
+      <p>
+        Invite to our Valentine’s night together 🤍
+        <br><br>
+
+        🕚 <b>Starting Time:</b><br>
+        When you get off work and finish making your food - around 11:00–11:30 PM your time.
+        <br><br>
+
+        🍽️ <b>Dinner First:</b><br>
+        Please bring food you love since I can't be there and cook today, and we’ll have dinner together on call. And you tell me about your day.
+        <br><br>
+
+        🎁 <b>Gift Opening:</b><br>
+        After we talk for a bit… you’ll open your gifts.
+        <br><br>
+
+        🎬 <b>Movie Nightttttt:</b><br>
+        You’ll pick from the slideshow below. I will keep adding to the list so you can choose from more options.
+        <br><br>
+
+        🙏 <b>Ending the Night:</b><br>
+        Prayer… then falling asleep together on call.
+        <br><br>
+
+        🌙 Sleep goal: 3:00 AM (your time).
+      </p>
+    </div>
+
+    <!-- MOVIE SLIDESHOW -->
+    <div class="slideshow">
+      <h2>🎬 Movie Night Picks</h2>
+      <div class="slides" id="movieSlides">
+        <img src="MV5BMGU1YWUwMWEtNThiNC00ZThmLWE0NzMtMmZkOTQ0OWNkMmJhXkEyXkFqcGc@._V1_.jpg" class="active">
+        <img src="1037189a-b8d1-4cdd-b095-cb2f2a96cb07_1600x900.jpg">
+      </div>
+    </div>
+
+    <div class="movie-caption" id="movieCaption">
+        <h3>Five Feet Apart (2019)</h3>
+        <p>
+          They love each other but physically can’t be close.<br>
+          Very “we can’t touch but we love deeply” vibe.<br>
+          Perfect metaphor for long distance.<br>
+          <i>(Warning: emotional movie, use tissues)</i>
+        </p>
+      </div>
+      
+
+    <!-- GIFTS COMING SOON -->
+    <div class="coming-soon">
+      <h2>🎁 Coming Soon</h2>
+      <p>
+        Something special is waiting for you…
+        <br>
+        Boxes you’ll open.
+        <br><br>
+        ✨ Full reveal on Valentine’s Day ✨
+      </p>
+    </div>
+
+  </div>
+
+  <!-- MUSIC -->
+  <audio autoplay loop>
+    <source src="love-song.mp3" type="audio/mpeg">
+  </audio>
+
+  <script>
+    /* CLICK‑THROUGH PLANS */
+    const plans = [
+      "We’ll start the night eating, talking and catching up 🤍",
+      "Then you open your gifts.. dadum dadum...",
+      "Snacks ready… something sweet for you will be there while we watch 🍫",
+      "You’ll pick our movie from the slideshow 🎬",
+      "After the movie… just us talking and laughing 🗣️",
+      "We’ll end the night with prayer 🙏",
+      "And fall asleep together on call 🌙"
+    ];
+
+    let planIndex = -1;
+
+    function nextPlan() {
+      planIndex++;
+      const text = document.getElementById("planText");
+
+      if (planIndex < plans.length) {
+        text.innerHTML = plans[planIndex];
+      } else {
+        text.innerHTML =
+          "I just wanted this night to feel special… because you are ❤️";
+      }
+    }
+
+    /* MOVIE DATA */
+const movies = [
+  {
+    title: "Five Feet Apart (2019)",
+    text: `
+      They love each other but physically can’t be close.<br>
+      Very “we can’t touch but we love deeply” vibe.<br>
+      Perfect metaphor for long distance.<br>
+      <i>(Warning: emotional movie, use tissues)</i>
+    `
+  },
+  {
+    title: "Before Sunrise (1995)",
+    text: `
+      Two people connecting deeply in limited time.<br>
+      Pure conversation and emotional intimacy.<br>
+      Feels real, not Hollywood fantasy.
+    `
+  }
+];
+
+/* SLIDESHOW */
+function startMovieSlideshow() {
+  const slides = document.querySelectorAll("#movieSlides img");
+  const caption = document.getElementById("movieCaption");
+
+  let index = 0;
+
+  setInterval(() => {
+    // remove current image
+    slides[index].classList.remove("active");
+
+    // move to next
+    index = (index + 1) % slides.length;
+
+    // show next image
+    slides[index].classList.add("active");
+
+    // update caption
+    caption.innerHTML = `
+      <h3>${movies[index].title}</h3>
+      <p>${movies[index].text}</p>
+    `;
+  }, 4000);
+}
+
+/* START */
+startMovieSlideshow();
+
+
+  </script>
+</body>
+</html>
