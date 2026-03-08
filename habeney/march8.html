@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>A Small Surprise For You</title>
+
+<style>
+body{
+    background: linear-gradient(135deg,#ffd6e7,#ffe9c9);
+    font-family: Arial, sans-serif;
+    text-align:center;
+    padding-top:100px;
+}
+
+.card{
+    background:white;
+    width:420px;
+    margin:auto;
+    padding:40px;
+    border-radius:20px;
+    box-shadow:0 10px 30px rgba(0,0,0,0.15);
+}
+
+h1{
+    color:#ff4d88;
+}
+
+button{
+    padding:12px 22px;
+    margin:10px;
+    border:none;
+    border-radius:10px;
+    font-size:16px;
+    cursor:pointer;
+}
+
+.yes{
+    background:#ff4d88;
+    color:white;
+}
+
+.maybe{
+    background:#f2f2f2;
+}
+
+#response{
+    margin-top:20px;
+    font-weight:bold;
+    color:#444;
+}
+</style>
+</head>
+
+<body>
+
+<div class="card">
+
+<h1>Hi beautiful 🌸</h1>
+
+<p>
+I want to say thank you for being the most amazing and important woman in my life. You are my woman, my baby, and my best friend. I am so grateful for every moment we share together, and I cherish you more than my words can ever express.
+</p>
+
+<p>
+I love you and…
+</p>
+
+<h2>Happy Women's Dayyyy</h2>
+<h2>Ready for our virtual lil date?</h2>
+
+<button class="yes" onclick="yesDate()">Yes 💕</button>
+<button class="maybe" onclick="maybeDate()">I need convincing</button>
+
+<p id="response"></p>
+
+</div>
+
+<script>
+
+function yesDate(){
+    document.getElementById("response").innerHTML =
+    "Yay! ❤️ Get comfy. Let's watch a movie together or talk on call. It's a date.";
+}
+
+function maybeDate(){
+    document.getElementById("response").innerHTML =
+    "Hmm… my offer includes: a movie, my full attention, and me missing you a lot. Ofcourse, the flowers coming tomorrow are included 😉.";
+}
+
+</script>
+
+</body>
+</html>
