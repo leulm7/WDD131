@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>A Date, Just for You ❤️</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+    font-family: Georgia, "Times New Roman", serif;
+    background: #fff8f5;
+    color: #3d2525;
+}
+
+/* HERO */
+.hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 32px;
+    position: relative;
+    overflow: hidden;
+
+    background:
+        radial-gradient(
+            circle at top,
+            #ffffff 0,
+            #ffe8e0 45%,
+            #f8cfc4 100%
+        );
+}
+.hero-content,
+section {
+    position: relative;
+    z-index: 2;
+}
+
+.heart {
+    position: absolute;
+    font-size: 28px;
+    opacity: 0.35;
+    animation: float 7s infinite ease-in-out;
+}
+
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-25px);
+    }
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+}
+
+.kicker {
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    font: 600 12px Arial, sans-serif;
+    color: #a85d63;
+}
+
+h1 {
+    font-size: clamp(3rem, 9vw, 7rem);
+    line-height: 0.95;
+    margin: 0 0 22px;
+    color: #7b2932;
+}
+
+.subtitle {
+    font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+    max-width: 650px;
+    margin: auto;
+    line-height: 1.7;
+}
+
+.btn {
+    display: inline-block;
+    margin-top: 30px;
+    padding: 15px 28px;
+    border-radius: 999px;
+
+    background: #7b2932;
+    color: white;
+
+    text-decoration: none;
+    font-family: Arial, sans-serif;
+    letter-spacing: 0.5px;
+
+    box-shadow: 0 8px 24px #7b293233;
+
+    transition: 0.3s ease;
+}
+
+.btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 30px #7b293244;
+}
+
+/* SECTIONS */
+
+section {
+    padding: 90px 22px;
+    max-width: 1000px;
+    margin: auto;
+}
+
+h2 {
+    font-size: clamp(2rem, 5vw, 4rem);
+    margin: 12px 0 20px;
+    color: #7b2932;
+}
+
+p {
+    font-size: 1.15rem;
+    line-height: 1.9;
+}
+
+/* CARDS */
+
+.card {
+    background: #ffffff;
+    border: 1px solid #efd9d3;
+    border-radius: 28px;
+    padding: 34px;
+
+    box-shadow: 0 15px 50px #6d252015;
+
+    margin: 22px 0;
+}
+.hero-content,
+section {
+    position: relative;
+    z-index: 2;
+}
+/* TIMELINE */
+
+.timeline {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 22px;
+}
+
+.date {
+    font: 700 12px Arial, sans-serif;
+    color: #a85d63;
+    letter-spacing: 2px;
+}
+
+/* QUOTE */
+
+.quote {
+    text-align: center;
+
+    font-size: clamp(1.5rem, 3vw, 2.4rem);
+
+    font-style: italic;
+
+    color: #7b2932;
+
+    padding: 30px;
+}
+
+/* FOOTER */
+
+footer {
+    text-align: center;
+    padding: 70px 20px;
+
+    background: #3d2525;
+    color: #fff1ed;
+}
+
+.small {
+    font: 13px Arial, sans-serif;
+    opacity: 0.75;
+}
+
+/* MOBILE */
+
+@media (max-width: 700px) {
+
+    .timeline {
+        grid-template-columns: 1fr;
+    }
+
+}
+
+/* FLOATING PHOTOS */
+
+.floating-photos {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+    z-index: 1;
+}
+
+.floating-photos {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+    z-index: 1;
+}
+
+.floating-photo {
+    position: absolute;
+
+    width: 95px;
+    height: 125px;
+
+    object-fit: cover;
+
+    border-radius: 14px;
+
+    padding: 5px;
+    background: white;
+
+    box-shadow:
+        0 10px 30px rgba(61, 37, 37, 0.20);
+
+    opacity: 0;
+
+    animation:
+        floatUp var(--duration) linear infinite;
+
+    animation-delay: var(--delay);
+
+    transform:
+        translateY(110vh)
+        rotate(var(--rotation));
+}
+
+
+@keyframes floatUp {
+
+    0% {
+        transform:
+            translateY(110vh)
+            translateX(0)
+            rotate(var(--rotation));
+
+        opacity: 0;
+    }
+
+    10% {
+        opacity: 0.65;
+    }
+
+    50% {
+        transform:
+            translateY(45vh)
+            translateX(var(--drift))
+            rotate(calc(var(--rotation) * -1));
+
+        opacity: 0.7;
+    }
+
+    90% {
+        opacity: 0.5;
+    }
+
+    100% {
+        transform:
+            translateY(-25vh)
+            translateX(calc(var(--drift) * -1))
+            rotate(var(--rotation));
+
+        opacity: 0;
+    }
+}
+
+</style>
+</head>
+
+
+<body>
+    <div class="floating-photos" id="floatingPhotos"></div>
+
+<!-- HERO -->
+
+<header class="hero">
+
+    <div class="heart" style="left:10%; top:18%;">
+        ♡
+    </div>
+
+    <div
+        class="heart"
+        style="right:12%; top:28%; animation-delay:1s;"
+    >
+        ♡
+    </div>
+
+
+    <div class="hero-content">
+
+        <div class="kicker">
+            A little something for you
+        </div>
+
+        <h1>
+            Will you let me<br>
+            take you on a date?
+        </h1>
+
+          <p class="subtitle">
+
+            <strong>
+                ... because I want to take you out, celebrate YOU.
+            </strong>
+
+        </p>
+
+
+        <a class="btn" href="#date">
+            Come with me ↓
+        </a>
+
+    </div>
+
+</header>
+
+
+
+<!-- SECTION 1 -->
+
+<section id="date">
+
+    <div class="kicker">
+        This time, officially
+    </div>
+
+    <h2>
+        You deserve to be asked.
+    </h2>
+
+
+    <div class="card">
+
+        <p>
+
+            I realized something.
+
+            We've spent time together,
+            gone places, eaten together,
+            and made memories
+
+            but I haven't really given you
+            the experience of being
+            asked out
+            and taken on an intentional date.
+
+        </p>
+
+
+        <p>
+            So I'm fixing that.
+        </p>
+
+
+        <p>
+
+            <strong>
+                my babe, this is me officially asking:
+            </strong>
+
+            <br><br>
+
+            Will you go on a date with me?
+
+        </p>
+
+    </div>
+
+</section>
+
+
+
+<!-- SECTION 2 -->
+
+<section>
+
+    <div class="kicker">
+        The plan
+    </div>
+
+    <h2>
+        Don't worry about the details.
+    </h2>
+
+
+    <div class="timeline">
+
+
+        <div class="card">
+
+            <div class="date">
+                01 · I PICK YOU UP
+            </div>
+
+            <p>
+                You don't have to figure anything out.
+
+                Just get ready. And look wonderful.
+
+                I'll come get you.
+            </p>
+
+        </div>
+
+
+
+        <div class="card">
+
+            <div class="date">
+                02 · SOMETHING YOU ENJOY
+            </div>
+
+            <p>
+
+                We're doing something
+                that's actually about
+                <em>you</em>
+
+                not just grabbing food
+                because we couldn't decide.
+
+            </p>
+
+        </div>
+
+
+
+        <div class="card">
+
+            <div class="date">
+                03 · DINNER
+            </div>
+
+            <p>
+
+                A table, good food,
+                and time where neither
+                of us has to rush through
+                the conversation.
+
+            </p>
+
+        </div>
+
+
+
+        <div class="card">
+
+            <div class="date">
+                04 · ONE MORE MEMORY
+            </div>
+
+            <p>
+
+                We'll end the night somewhere yummy,
+                we can slow down,
+
+                take pictures,
+
+                laugh,
+
+                and just enjoy being together.
+
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- QUOTE -->
+
+<section>
+
+    <div class="card quote">
+
+        "You are altogether beautiful, my darling; there is no flaw in you." 
+        <br><br>
+        <em> ~ Song of Solomon 4:7 </em>
+
+    </div>
+
+</section>
+
+
+
+<!-- FINAL MESSAGE -->
+
+<section>
+
+    <div class="kicker">
+        One last thing
+    </div>
+
+    <h2>
+        This isn't about spending money.
+    </h2>
+
+
+    <p>
+
+        It's about intention.
+
+        I want you to feel pursued.
+
+        I want you to feel special.
+
+        I want you to know that going
+        on a date with you isn't something
+        I just happen to do,
+
+        it's something I <strong>want want want</strong>
+        to do.
+
+    </p>
+
+
+    <p>
+
+        So let's make beautiful memory
+        ... ready?
+
+    </p>
+
+
+    <div style="text-align:center;">
+
+        <a class="btn" href="#yes">
+            Say yes ❤️
+        </a>
+
+    </div>
+
+</section>
+
+
+
+<!-- YES -->
+
+<section id="yes">
+
+    <div
+        class="card"
+        style="text-align:center;"
+    >
+
+        <div class="kicker">
+            Officially asked
+        </div>
+
+        <h2>
+            See you on our date.
+        </h2>
+
+
+        <p style="font-size:2rem;">
+            ❤️
+        </p>
+
+    </div>
+
+</section>
+
+
+
+<!-- FOOTER -->
+
+<footer>
+
+    <div style="font-size:28px;">
+        For my girl.
+    </div>
+
+    <p class="small">
+        Made with love, not just HTML code.
+    </p>
+
+</footer>
+
+<script>
+
+const photos = [
+    "photos/us1.JPG",
+    "photos/us2.JPG",
+    "photos/us3.jpeg",
+    "photos/us4.jpeg",
+    "photos/us5.jpeg",
+    "photos/us6.jpeg",
+    "photos/us7.jpeg",
+    "photos/us8.jpg",
+    "photos/us9.JPEG",
+    "photos/us10.jpeg"
+];
+    
+    const container = document.getElementById("floatingPhotos");
+    
+    function createFloatingPhoto() {
+    
+        const img = document.createElement("img");
+    
+        // Pick a random photo
+        const randomPhoto =
+            photos[Math.floor(Math.random() * photos.length)];
+    
+        img.src = randomPhoto;
+    
+        img.className = "floating-photo";
+    
+        // Random horizontal starting position
+        img.style.left =
+            Math.random() * 100 + "vw";
+    
+        // Random size
+        const size = 75 + Math.random() * 35;
+
+img.style.width = size + "px";
+img.style.height = (size * 1.3) + "px";
+    
+        // Random animation speed
+        img.style.setProperty(
+            "--duration",
+            (12 + Math.random() * 8) + "s"
+        );
+    
+        // Random delay
+        img.style.setProperty(
+            "--delay",
+            (Math.random() * 5) + "s"
+        );
+    
+        // Random sideways movement
+        img.style.setProperty(
+            "--drift",
+            (-100 + Math.random() * 200) + "px"
+        );
+    
+        // Random rotation
+        img.style.setProperty(
+            "--rotation",
+            (-12 + Math.random() * 24) + "deg"
+        );
+    
+        container.appendChild(img);
+    
+        // Remove old image after animation
+        setTimeout(() => {
+            img.remove();
+        }, 22000);
+    }
+    
+    
+    // Create several photos initially
+    
+    for (let i = 0; i < 8; i++) {
+        createFloatingPhoto();
+    }
+    
+    
+    // Keep creating new photos forever
+    
+    setInterval(createFloatingPhoto, 2500);
+    
+    </script>
+    
+    </body>
+</body>
+</html>
